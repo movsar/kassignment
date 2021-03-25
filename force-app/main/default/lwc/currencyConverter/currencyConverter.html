@@ -6,7 +6,7 @@
                     <h2 class="slds-card__header-title slds-align_absolute-center">
                         <span>Currency data retrieved from https://exchangeratesapi.io on {lastRefreshDateTime}</span>
                         <button class="slds-button slds-button_icon slds-button_icon-border slds-m-left_small"
-                            title="Refresh" onclick={refreshTimeline}>
+                            title="Refresh" onclick={retrieveData}>
                             <svg class="slds-button__icon" aria-hidden="true">
                                 <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.28.0#refresh">
                                 </use>
@@ -22,7 +22,7 @@
                     <c-currency-converter-calc></c-currency-converter-calc>
                 </div>
                 <div class="slds-col slds-size_1-of-3">
-                    <c-currency-converter-list></c-currency-converter-list>
+                    <c-currency-converter-list currency-data={currencyData}></c-currency-converter-list>
                 </div>
             </div>
         </div>

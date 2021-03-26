@@ -1,23 +1,35 @@
 import { LightningElement, track } from 'lwc';
 
 export default class CurrencyConverter extends LightningElement {
+    base = 'USD';
+    @track rates = [];
     lastRefreshDateTime;
-    @track currencyData = [];
 
-    getCurrentDateTime(){
+    baseChangeHandler(e){
+        this.base = e.detail;
+        this.retrieveData();
+    }
+
+    getCurrentDateTime() {
         return (new Date()).toLocaleString();
     }
 
-    retrieveData(){
+    retrieveData() {
         this.lastRefreshDateTime = this.getCurrentDateTime();
 
-        fetch('https://api.exchangeratesapi.io/latest')
+        fetch(`https://api.exchangeratesapi.io/latest?base=${this.base}`)
             .then(response => response.json())
-            .then(data => this.currencyData = data)
+            .then(data => {
+                this.rates = Object.keys(data.rates).map(key => {
+                    return { 'name': key, 'value': data.rates[key] };
+                });
+            })
             .catch(error => console.error(error));
     }
 
-    connectedCallback(){
+
+
+    connectedCallback() {
         this.retrieveData();
     }
 }

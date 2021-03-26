@@ -21,7 +21,7 @@ export default class CurrencyConverter extends LightningElement {
             .then(response => response.json())
             .then(data => {
                 this.rates = Object.keys(data.rates).map(key => {
-                    return { 'name': key, 'value': data.rates[key] };
+                    return { 'code': key, 'value': data.rates[key] };
                 });
             })
             .catch(error => console.error(error));

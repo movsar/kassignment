@@ -2,27 +2,21 @@
     <div class="slds-grid slds-grid_vertical slds-grid_gutters slds-media_center" style="background-color: aquamarine;">
         <div class="slds-grid">
             <div class="slds-col slds-size_1-of-2">
-                <lightning-input type="number" placeholder="0.00"></lightning-input>
+                <lightning-input data-id="amountInBaseCurrency" type="number" placeholder="0.00" onchange={handleBaseCurrencyAmountChange}></lightning-input>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                    <lightning-combobox
-                        value={base}
-                        options={ratesAsComboboxOptions}
-                        onchange={handleSelectedRateChange} >
-                    </lightning-combobox>
+                <lightning-combobox data-id="selectedBaseCurrency" options={ratesAsComboboxOptions} onchange={handleSelectedBaseCurrencyChange}>
+                </lightning-combobox>
             </div>
         </div>
 
         <div class="slds-grid slds-align_absolute-center">
             <div class="slds-col slds-size_1-of-2">
-                <lightning-input type="number" placeholder="0.00"></lightning-input>
+                <lightning-input data-id="amountInQuoteCurrency" value={amountInQuoteCurrency} type="number" placeholder="0.00"></lightning-input>
             </div>
             <div class="slds-col slds-size_1-of-2">
-                    <lightning-combobox
-                        value={base}
-                        options={ratesAsComboboxOptions}
-                        onchange={handleSelectedRateChange} >
-                    </lightning-combobox>
+                <lightning-combobox data-id="selectedQuoteCurrency" options={ratesAsComboboxOptions} onchange={handleSelectedQuoteCurrencyChange}>
+                </lightning-combobox>
             </div>
         </div>
     </div>

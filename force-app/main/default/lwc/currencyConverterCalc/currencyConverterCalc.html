@@ -12,7 +12,7 @@
 
         <div class="slds-grid slds-align_absolute-center">
             <div class="slds-col slds-size_1-of-2">
-                <lightning-input data-id="amountInQuoteCurrency" type="number" placeholder="0.00"></lightning-input>
+                <lightning-input data-id="amountInQuoteCurrency" type="number" placeholder="0.00" onchange={handleQuoteCurrencyAmountChange}></lightning-input>
             </div>
             <div class="slds-col slds-size_1-of-2">
                 <lightning-combobox data-id="selectedQuoteCurrency" options={ratesAsComboboxOptions} onchange={handleSelectedQuoteCurrencyChange}>

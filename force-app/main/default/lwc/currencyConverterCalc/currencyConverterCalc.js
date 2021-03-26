@@ -6,6 +6,9 @@ export default class CurrencyConverterCalc extends LightningElement {
 
     initialized = false;
 
+    amountInBaseCurrency;
+    amountInQuoteCurrency;
+
     get ratesAsComboboxOptions(){
         return this.rates.map(rate => { return {'label':rate.code,'value':rate.code };});
     }
@@ -14,7 +17,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         return (this.rates.find(rate => rate.code == this.selectedQuoteCurrency)).value;
     }
 
-    calculate(){
+    recalculate(){
         if (!this.amountInQuoteCurrencyElement.value || !this.amountInBaseCurrency || !this.exchangeRate){
             console.log('empty params');
             return;
@@ -32,41 +35,40 @@ export default class CurrencyConverterCalc extends LightningElement {
             this.initialized = true;
         }
 
-        this.calculate();
+        this.recalculate();
     }
 
     //#region event handlers
+    handleQuoteCurrencyAmountChange(){
+        if (this.amountInQuoteCurrency === this.amountInQuoteCurrencyElement.value){
+            // No changes has been done
+            return;
+        }
+        this.amountInQuoteCurrency = this.amountInQuoteCurrencyElement.value;
+        this.amountInBaseCurrencyElement.value = this.amountInQuoteCurrency / this.exchangeRate;
+    }
+
     handleBaseCurrencyAmountChange(){
-        console.log(this.amountInBaseCurrencyElement.value);
-        console.log(this.amountInQuoteCurrencyElement.value);
-
-        const amountAfterConversion = this.amountInBaseCurrencyElement.value * this.exchangeRate;
-        this.amountInQuoteCurrencyElement.value = amountAfterConversion;
-
-        this.calculate();
+        if (this.amountInBaseCurrency === this.amountInBaseCurrencyElement.value){
+            // No changes has been done
+            return;
+        }
+        this.amountInBaseCurrency = this.amountInBaseCurrencyElement.value;
+        this.amountInQuoteCurrencyElement.value = this.amountInBaseCurrencyElement.value * this.exchangeRate;
     }
 
     handleSelectedBaseCurrencyChange(){
-        const selectedBaseCurrency = this.baseCurrencyElement.value;
-        this.dispatchEvent(new CustomEvent('basechange', { detail: selectedBaseCurrency }));
+        this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrencyElement.value }));
     }
 
     handleSelectedQuoteCurrencyChange(){
-        this.calculate();
+        this.recalculate();
     }
     //#endregion
    
 
     toPlainObject(obj){
         return JSON.parse(JSON.stringify(obj));
-    }
-
-    get amountInQuoteCurrency(){
-        return this.amountInQuoteCurrencyElement.value;
-    }
-
-    get amountInBaseCurrency(){
-        return this.amountInBaseCurrencyElement.value;
     }
 
     get selectedQuoteCurrency(){

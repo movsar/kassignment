@@ -3,8 +3,6 @@ import { LightningElement, api, track } from 'lwc';
 export default class CurrencyConverterCalc extends LightningElement {
     @api base;
     @api rates;
-    @track selectedQuoteCurrency;
-    @track amountInQuoteCurrency;
 
     initialized = false;
 
@@ -17,17 +15,24 @@ export default class CurrencyConverterCalc extends LightningElement {
     }
 
     calculate(){
-        this.amountInQuoteCurrency = this.exchangeRate * this.amountInQuoteCurrency;
+        if (!this.amountInQuoteCurrencyElement.value || !this.amountInBaseCurrency || !this.exchangeRate){
+            console.log('empty params');
+            return;
+        }
+
+        this.amountInQuoteCurrencyElement.value = this.exchangeRate * this.amountInBaseCurrency;
     }
 
     renderedCallback(){
         if (this.initialized === false && this.rates.length > 0){
             const randomIndex = Math.floor(Math.random() * this.rates.length);
-            this.selectedQuoteCurrency = this.rates[randomIndex].code;
 
             this.baseCurrencyElement.value = this.base;
-            this.quoteCurrencyElement.value = this.selectedQuoteCurrency;
+            this.quoteCurrencyElement.value = this.rates[randomIndex].code;
+            this.initialized = true;
         }
+
+        this.calculate();
     }
 
     //#region event handlers
@@ -44,20 +49,28 @@ export default class CurrencyConverterCalc extends LightningElement {
     handleSelectedBaseCurrencyChange(){
         const selectedBaseCurrency = this.baseCurrencyElement.value;
         this.dispatchEvent(new CustomEvent('basechange', { detail: selectedBaseCurrency }));
-
-        this.calculate();
     }
-    handleSelectedQuoteCurrencyChange(){
-        this.selectedQuoteCurrency = this.quoteCurrencyElement.value;
 
+    handleSelectedQuoteCurrencyChange(){
         this.calculate();
     }
     //#endregion
-
    
 
     toPlainObject(obj){
         return JSON.parse(JSON.stringify(obj));
+    }
+
+    get amountInQuoteCurrency(){
+        return this.amountInQuoteCurrencyElement.value;
+    }
+
+    get amountInBaseCurrency(){
+        return this.amountInBaseCurrencyElement.value;
+    }
+
+    get selectedQuoteCurrency(){
+        return this.quoteCurrencyElement.value;
     }
 
     // #region html refs

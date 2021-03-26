@@ -3,10 +3,13 @@
         <ul class="slds-col slds-size_1-of-1" style="background-color: rgb(16, 194, 135);">
             <template for:each={rates} for:item="rate">
                 <li key={rate.name}>
-                    <button class="slds-button slds-button_outline-brand slds-col slds-size_1-of-2"
-                        onclick={rateClickHandler} data-currency={rate.name}>
-                        <span>{rate.name}</span>
-                        <span>{rate.value}</span>
+                    <button class="slds-button slds-button_outline-brand slds-col slds-size_1-of-2" onclick={rateClickHandler} data-currency={rate.name}>
+                        <lightning-formatted-number 
+                            value={rate.value}
+                            format-style="currency" 
+                            currency-code={rate.name} 
+                            currency-display-as="code">
+                        </lightning-formatted-number>
                     </button>
                 </li>
             </template>

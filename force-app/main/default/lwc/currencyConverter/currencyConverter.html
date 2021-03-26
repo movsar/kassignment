@@ -22,7 +22,7 @@
                     <c-currency-converter-calc></c-currency-converter-calc>
                 </div>
                 <div class="slds-col slds-size_1-of-3">
-                    <c-currency-converter-list currency-data={currencyData}></c-currency-converter-list>
+                    <c-currency-converter-list base={base} rates={rates} onbasechange={baseChangeHandler}></c-currency-converter-list>
                 </div>
             </div>
         </div>

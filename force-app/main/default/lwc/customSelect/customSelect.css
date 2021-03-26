@@ -1,8 +1,0 @@
-.combobox {
-    background-color: rgba(255, 255, 255, 0.726);
-    cursor:pointer;
-}
-
-input::-webkit-calendar-picker-indicator {
-    opacity: 100;
-}

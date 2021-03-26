@@ -6,7 +6,6 @@ export default class CurrencyConverterList extends LightningElement {
 
     rateClickHandler(event){
         const newBase = event.currentTarget.dataset.currency;
-        button_brand
         this.dispatchEvent(new CustomEvent('basechange', { detail: newBase }));
     }
 

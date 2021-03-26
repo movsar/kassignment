@@ -5,9 +5,13 @@ export default class CurrencyConverterCalc extends LightningElement {
     @api rates;
 
     get ratesAsComboboxOptions(){
-        return this.rates.map(rate => rate.name);
+        return this.rates.map(rate => { return {'label':rate.name,'value':rate.name };});
     }
 
+    handleSelectedRateChange(){
+        
+    }
+    
     toPlainObject(obj){
         return JSON.parse(JSON.stringify(obj));
     }

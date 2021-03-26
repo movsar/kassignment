@@ -27,8 +27,6 @@ export default class CurrencyConverter extends LightningElement {
             .catch(error => console.error(error));
     }
 
-
-
     connectedCallback() {
         this.retrieveData();
     }

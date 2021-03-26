@@ -1,0 +1,8 @@
+<template>
+    <input data-id="option-selector" name="input" placeholder={defaultOption} class="slds-input" type="text" />
+    <datalist data-id="available-options-list">
+        <template for:each={availableOptions} for:item='option'>
+            <option key={option} value={option}>{option}</option>
+        </template>
+    </datalist>
+</template>

@@ -1,8 +1,36 @@
 <template>
-    <div style="background-color: aquamarine;">
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+    <input id="input" name="input" list="countries" class="slds-input" type="text" />
+    <datalist id="countries">
+        <option>Italy</option>
+        <option>Spain</option>
+        <option>France</option>
+        <option>USA</option>
+        <option>England</option>
+        <option>Belgium</option>
+        <option>Brazil</option>
+        <option>Mauritius</option>
+        <option>Colombia</option>
+        <option>Portugal</option>
+        <option>Russia</option>
+        <option>Mauritania</option>
+    </datalist>
+    <div class="slds-grid slds-col slds-size_1-of-3 slds-media_center" style="background-color: aquamarine;">
+
+
+        <div class="slds-form-element slds-col slds-size_1-of-2">
+            <input type="currency" placeholder="0.00" class="slds-input" />
+        </div>
+        <div class="slds-form-element slds-col slds-size_1-of-2">
+            <div class="slds-form-element__control">
+                <c-autocomplete-combobox default-option="USD" available-options={ratesAsComboboxOptions}></c-autocomplete-combobox>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
     </div>
 </template>

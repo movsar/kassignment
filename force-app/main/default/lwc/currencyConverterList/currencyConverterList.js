@@ -7,11 +7,9 @@ export default class CurrencyConverterList extends LightningElement {
 
     currentPage = 1;
     totalPages = 1;
-    recordsPerPage = 8;
+    recordsPerPage = 11;
 
     initialized = false;
-
-  
 
     rateClickHandler(event) {
         const newBase = event.currentTarget.dataset.currency;
@@ -27,7 +25,9 @@ export default class CurrencyConverterList extends LightningElement {
     }
 
     //#region pagination
+    @api
     showCurrentPageRates() {
+        console.log(JSON.parse(JSON.stringify(this.rates)));
         const showFrom = (this.currentPage - 1) * this.recordsPerPage;
         const showTo = showFrom + this.recordsPerPage;
         this.currentPageRates = this.rates.slice(showFrom, showTo);

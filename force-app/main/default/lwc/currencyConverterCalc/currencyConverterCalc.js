@@ -45,6 +45,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         if (!this.amountInBaseCurrency || !this.exchangeRate){
             return;
         }
+        this.baseCurrency = this.base;
 
         this.amountInQuoteCurrency = parseFloat((this.amountInBaseCurrency * this.exchangeRate).toFixed(3));
     }

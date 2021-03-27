@@ -6,7 +6,7 @@ export default class CurrencyConverter extends LightningElement {
     initialized = false;
     lastRefreshDateTime;
 
-    baseChangeHandler(e){
+    baseChangeHandler(e) {
         this.base = e.detail;
         this.retrieveData();
     }
@@ -23,18 +23,21 @@ export default class CurrencyConverter extends LightningElement {
                     return { 'code': key, 'value': data.rates[key] };
                 });
                 this.lastRefreshDateTime = this.getCurrentDateTime();
+
                 setTimeout(() => {
-                     this.currencyConverterCalc.reCalculateFromBaseToQuote();
+                    this.currencyConverterCalc.reCalculateFromBaseToQuote();
+                    this.currencyConverterList.showCurrentPageRates();
                 }, 500);
             })
             .catch(error => console.error(error));
     }
     currencyConverterCalc;
 
-    renderedCallback(){
-        if (this.initialized === false){
+    renderedCallback() {
+        if (this.initialized === false) {
             this.initialized = true;
             this.currencyConverterCalc = this.template.querySelector("c-currency-converter-calc");
+            this.currencyConverterList = this.template.querySelector("c-currency-converter-list");
         }
     }
 

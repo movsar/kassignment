@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-
+import { LocalSettings } from 'c/utils';
 export default class CurrencyConverterCalc extends LightningElement {
     @api base;
     @api rates;
@@ -77,6 +77,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         
         this.baseCurrencyHasChanged = true;
         this.baseCurrency = this.baseCurrencyElement.value;
+        LocalSettings.incrementCurrencyOrder(this.baseCurrency);
         this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
     }
 

@@ -1,57 +1,59 @@
 <template>
-    <article class="slds-card">
-        <div class="slds-card__header slds-grid">
-            <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                <div class="slds-media__body">
+  <article class="slds-card slds-x-large-size--1-of-2 slds-large-size--3-of-4 slds-medium-size--1-of-1">
+    <div class="slds-card__header slds-grid">
+      <header class="slds-media slds-media_center slds-has-flexi-truncate">
+        <div class="slds-media__body">
 
-                    <div class="slds-page-header">
-                        <div class="slds-page-header__row">
-                            <div class="slds-page-header__col-title">
-                                <div class="slds-media">
-                                    <div class="slds-media__figure">
-                                        <lightning-icon icon-name="standard:product_transfer" alternative-text="Account" title="Account"></lightning-icon>
-                                    </div>
-                                    <div class="slds-media__body">
-                                        <div class="slds-page-header__name">
-                                            <div class="slds-page-header__name-title">
-                                                <h1>
-                                                    <span class="slds-page-header__title slds-truncate">Simple Currency Converter</span>
-                                                </h1>
-                                            </div>
-                                        </div>
-                                        <div class="slds-page-header__name-meta">
-                                            <span>Currency data retrieved from https://exchangeratesapi.io on {lastRefreshDateTime}</span>
-                                            <button
-                                                class="slds-button slds-button_icon slds-button_icon-border slds-m-left_small"
-                                                title="Refresh" onclick={retrieveData}>
-                                                <svg class="slds-button__icon" aria-hidden="true">
-                                                    <use
-                                                        xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.28.0#refresh">
-                                                    </use>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+          <div class="slds-page-header">
+            <div class="slds-page-header__row">
+              <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                  <div class="slds-media__figure">
+                    <lightning-icon 
+                      icon-name="standard:product_transfer" 
+                      alternative-text="Account" 
+                      title="Account">
+                    </lightning-icon>
+                  </div>
+                  <div class="slds-media__body">
+                    <div class="slds-page-header__name">
+                      <div class="slds-page-header__name-title">
+                        <h1>
+                          <span class="slds-page-header__title slds-truncate">Simple Currency Converter</span>
+                        </h1>
+                      </div>
                     </div>
-
+                    <div class="slds-page-header__name-meta">
+                      <span>Currency data retrieved from https://exchangeratesapi.io on {lastRefreshDateTime}</span>
+                      <button class="slds-button slds-button_icon slds-button_icon-border slds-m-left_small"
+                        title="Refresh" onclick={retrieveData}>
+                        <svg class="slds-button__icon" aria-hidden="true">
+                          <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.28.0#refresh">
+                          </use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-            </header>
-        </div>
-        <div class="slds-card__body slds-card__body_inner">
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col slds-size_2-of-3">
-                    <c-currency-converter-calc base={base} rates={rates} onbasechange={baseChangeHandler}>
-                    </c-currency-converter-calc>
-                </div>
-                <div class="slds-col slds-size_1-of-3">
-                    <c-currency-converter-list base={base} rates={rates} onbasechange={baseChangeHandler}>
-                    </c-currency-converter-list>
-                </div>
+              </div>
             </div>
+          </div>
+
         </div>
-        <footer class="slds-card__footer"></footer>
-    </article>
+      </header>
+    </div>
+    <div class="slds-card__body slds-card__body_inner">
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_2-of-3">
+          <c-currency-converter-calc base={base} rates={rates} onbasechange={baseChangeHandler}>
+          </c-currency-converter-calc>
+        </div>
+        <div class="slds-col slds-size_1-of-3">
+          <c-currency-converter-list base={base} rates={rates} onbasechange={baseChangeHandler}>
+          </c-currency-converter-list>
+        </div>
+      </div>
+    </div>
+    <footer class="slds-card__footer"></footer>
+  </article>
 </template>

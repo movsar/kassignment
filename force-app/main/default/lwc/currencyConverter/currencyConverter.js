@@ -24,8 +24,9 @@ export default class CurrencyConverter extends LightningElement {
                 this.lastRefreshDateTime = this.getCurrentDateTime();
                 console.log('exchangeRate');
                 console.log(this.rates);
-                
-                this.currencyConverterCalc.reCalculateFromBaseToQuote();
+                // setTimeout(() => {
+                //     this.currencyConverterCalc.reCalculateFromBaseToQuote();
+                // }, 500);
             })
             .catch(error => console.error(error));
     }

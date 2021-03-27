@@ -6,7 +6,10 @@ export default class CurrencyConverterCalc extends LightningElement {
 
     initialized = false;
 
+    baseCurrency;
     amountInBaseCurrency;
+
+    quoteCurrency;
     amountInQuoteCurrency;
 
     get ratesAsComboboxOptions(){
@@ -14,24 +17,24 @@ export default class CurrencyConverterCalc extends LightningElement {
     }
 
     get exchangeRate(){
-        return (this.rates.find(rate => rate.code == this.selectedQuoteCurrency)).value;
+        return (this.rates.find(rate => rate.code == this.quoteCurrency)).value;
     }
 
     recalculate(){
-        if (!this.amountInQuoteCurrencyElement.value || !this.amountInBaseCurrency || !this.exchangeRate){
-            console.log('empty params');
+        if (!this.amountInBaseCurrency || !this.exchangeRate){
+            console.error('empty params');
             return;
         }
 
-        this.amountInQuoteCurrencyElement.value = this.exchangeRate * this.amountInBaseCurrency;
+        this.amountInQuoteCurrency = this.exchangeRate * this.amountInBaseCurrency;
     }
 
     renderedCallback(){
         if (this.initialized === false && this.rates.length > 0){
-            const randomIndex = Math.floor(Math.random() * this.rates.length);
-
-            this.baseCurrencyElement.value = this.base;
-            this.quoteCurrencyElement.value = this.rates[randomIndex].code;
+            // Initialize form controls
+            this.baseCurrency = this.base;
+            this.quoteCurrency = 'RUB';
+            this.amountInBaseCurrency = 1;
             this.initialized = true;
         }
 
@@ -41,38 +44,44 @@ export default class CurrencyConverterCalc extends LightningElement {
     //#region event handlers
     handleQuoteCurrencyAmountChange(){
         if (this.amountInQuoteCurrency === this.amountInQuoteCurrencyElement.value){
-            // No changes has been done
             return;
         }
         this.amountInQuoteCurrency = this.amountInQuoteCurrencyElement.value;
-        this.amountInBaseCurrencyElement.value = this.amountInQuoteCurrency / this.exchangeRate;
+
+        this.amountInBaseCurrency = this.amountInQuoteCurrency / this.exchangeRate;
     }
 
     handleBaseCurrencyAmountChange(){
         if (this.amountInBaseCurrency === this.amountInBaseCurrencyElement.value){
-            // No changes has been done
             return;
         }
         this.amountInBaseCurrency = this.amountInBaseCurrencyElement.value;
-        this.amountInQuoteCurrencyElement.value = this.amountInBaseCurrencyElement.value * this.exchangeRate;
+
+        this.amountInQuoteCurrency = this.amountInBaseCurrency * this.exchangeRate;
     }
 
     handleSelectedBaseCurrencyChange(){
-        this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrencyElement.value }));
+        if (this.quoteCurrency === this.baseCurrencyElement.value){
+            this.quoteCurrency = this.baseCurrency;
+        }
+        this.baseCurrency = this.baseCurrencyElement.value;
+        
+        this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
     }
 
     handleSelectedQuoteCurrencyChange(){
+        if (this.baseCurrency === this.quoteCurrencyElement.value){
+            this.baseCurrency = this.quoteCurrency;
+            this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
+        }
+        this.quoteCurrency = this.quoteCurrencyElement.value;
+
         this.recalculate();
     }
     //#endregion
    
-
     toPlainObject(obj){
         return JSON.parse(JSON.stringify(obj));
-    }
-
-    get selectedQuoteCurrency(){
-        return this.quoteCurrencyElement.value;
     }
 
     // #region html refs

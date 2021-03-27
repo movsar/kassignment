@@ -4,24 +4,44 @@
       <div class="slds-grid_vertical">
         <div class="slds-grid">
           <div class="slds-col slds-size_1-of-2">
-            <input class="slds-input" data-id="amountInBaseCurrency" type="number" placeholder="0.000"
-              value={amountInBaseCurrency} oninput={handleBaseCurrencyAmountChange}></input>
+            <lightning-input 
+              label="Amount in base currency"
+              data-id="amountInBaseCurrency" 
+              type="number" 
+              placeholder="0.000"
+              value={amountInBaseCurrency} 
+              onchange={handleBaseCurrencyAmountChange}>
+            </lightning-input>
           </div>
           <div class="slds-col slds-size_1-of-2">
-            <lightning-combobox variant="label-hidden" data-id="selectedBaseCurrency" options={ratesAsComboboxOptions}
-              value={baseCurrency} onchange={handleSelectedBaseCurrencyChange}>
+            <lightning-combobox 
+              label="Base currency" 
+              data-id="selectedBaseCurrency" 
+              options={ratesAsComboboxOptions}
+              value={baseCurrency} 
+              onchange={handleSelectedBaseCurrencyChange}>
             </lightning-combobox>
           </div>
         </div>
 
         <div class="slds-grid">
           <div class="slds-col slds-size_1-of-2">
-            <input class="slds-input" data-id="amountInQuoteCurrency" type="number" placeholder="0.000"
-              value={amountInQuoteCurrency} oninput={handleQuoteCurrencyAmountChange}></input>
+            <lightning-input 
+              label="Amount in quote currency"
+              data-id="amountInQuoteCurrency" 
+              type="number"
+              placeholder="0.000"
+              value={amountInQuoteCurrency} 
+              onchange={handleQuoteCurrencyAmountChange}>
+            </lightning-input>
           </div>
           <div class="slds-col slds-size_1-of-2">
-            <lightning-combobox variant="label-hidden" data-id="selectedQuoteCurrency" options={ratesAsComboboxOptions}
-              value={quoteCurrency} onchange={handleSelectedQuoteCurrencyChange}>
+            <lightning-combobox
+              label="Quote currency"
+              data-id="selectedQuoteCurrency" 
+              options={ratesAsComboboxOptions}
+              value={quoteCurrency} 
+              onchange={handleSelectedQuoteCurrencyChange}>
             </lightning-combobox>
           </div>
         </div>

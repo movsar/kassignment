@@ -3,6 +3,7 @@ import { LightningElement, track } from 'lwc';
 export default class CurrencyConverter extends LightningElement {
     base = 'USD';
     @track rates = [];
+    initialized = false;
     lastRefreshDateTime;
 
     baseChangeHandler(e){
@@ -22,19 +23,19 @@ export default class CurrencyConverter extends LightningElement {
                     return { 'code': key, 'value': data.rates[key] };
                 });
                 this.lastRefreshDateTime = this.getCurrentDateTime();
-                console.log('exchangeRate');
-                console.log(this.rates);
-                // setTimeout(() => {
-                //     this.currencyConverterCalc.reCalculateFromBaseToQuote();
-                // }, 500);
+                setTimeout(() => {
+                     this.currencyConverterCalc.reCalculateFromBaseToQuote();
+                }, 500);
             })
             .catch(error => console.error(error));
     }
     currencyConverterCalc;
 
     renderedCallback(){
-        this.currencyConverterCalc = this.template.querySelector("c-currency-converter-calc");
-        console.log('rendered');
+        if (this.initialized === false){
+            this.initialized = true;
+            this.currencyConverterCalc = this.template.querySelector("c-currency-converter-calc");
+        }
     }
 
     connectedCallback() {

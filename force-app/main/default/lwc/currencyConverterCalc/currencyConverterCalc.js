@@ -28,7 +28,7 @@ export default class CurrencyConverterCalc extends LightningElement {
             // TODO: Change to a better approach
             setTimeout(() => {
                 this.reCalculateFromBaseToQuote();
-            }, 100);
+            }, 500);
         }
     }
 

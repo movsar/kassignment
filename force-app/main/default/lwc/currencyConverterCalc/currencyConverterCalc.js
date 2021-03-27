@@ -25,6 +25,7 @@ export default class CurrencyConverterCalc extends LightningElement {
 
         if (this.baseCurrencyHasChanged === true){
             this.baseCurrencyHasChanged = false;
+            // TODO: Change to a better approach
             setTimeout(() => {
                 this.reCalculateFromBaseToQuote();
             }, 100);

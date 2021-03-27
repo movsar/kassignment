@@ -30,10 +30,19 @@ export default class CurrencyConverterCalc extends LightningElement {
     }
 
     reCalculateFromQuoteToBase(){
+        if (!this.amountInQuoteCurrency || !this.exchangeRate){
+            return;
+        }
+
         this.amountInBaseCurrency = parseFloat((this.amountInQuoteCurrency / this.exchangeRate).toFixed(3));
     }
 
+    @api
     reCalculateFromBaseToQuote(){
+        if (!this.amountInBaseCurrency || !this.exchangeRate){
+            return;
+        }
+
         this.amountInQuoteCurrency = parseFloat((this.amountInBaseCurrency * this.exchangeRate).toFixed(3));
     }
 
@@ -52,7 +61,7 @@ export default class CurrencyConverterCalc extends LightningElement {
             return;
         }
         this.amountInBaseCurrency = parseFloat(this.amountInBaseCurrencyElement.value);
-        
+
         this.reCalculateFromBaseToQuote();
     }
 
@@ -70,11 +79,12 @@ export default class CurrencyConverterCalc extends LightningElement {
     handleSelectedQuoteCurrencyChange() {
         if (this.quoteCurrencyElement.value === this.baseCurrency) {
             this.baseCurrency = this.quoteCurrency;
+            this.baseCurrencyHasChanged = true;
             this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
         }
 
         this.quoteCurrency = this.quoteCurrencyElement.value;
-        this.reCalculateFromBaseToQuote();
+        this.reCalculateFromBaseToQuote();    
     }
     //#endregion
 

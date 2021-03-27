@@ -1,4 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
+import { LocalSettings } from 'c/utils';
 
 export default class CurrencyConverterList extends LightningElement {
     @api base;
@@ -13,6 +14,7 @@ export default class CurrencyConverterList extends LightningElement {
 
     rateClickHandler(event) {
         const newBase = event.currentTarget.dataset.currency;
+        LocalSettings.incrementCurrencyOrder(newBase);
         this.dispatchEvent(new CustomEvent('basechange', { detail: newBase }));
     }
 

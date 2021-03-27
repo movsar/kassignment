@@ -1,5 +1,5 @@
 import { LightningElement, track } from 'lwc';
-
+import { LocalSettings } from 'c/utils';
 export default class CurrencyConverter extends LightningElement {
     base = 'USD';
     @track rates = [];
@@ -20,11 +20,12 @@ export default class CurrencyConverter extends LightningElement {
             .then(response => response.json())
             .then(data => {
                 this.rates = Object.keys(data.rates).map(key => {
-                    return { 'code': key, 'value': data.rates[key] };
+                    return { 'code': key, 'value': data.rates[key], 'order': LocalSettings.getCurrencyOrder(key) };
                 });
                 this.lastRefreshDateTime = this.getCurrentDateTime();
 
                 setTimeout(() => {
+                    console.log(this.rates);
                     this.currencyConverterCalc.reCalculateFromBaseToQuote();
                     this.currencyConverterList.showCurrentPageRates();
                 }, 500);

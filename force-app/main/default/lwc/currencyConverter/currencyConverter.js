@@ -15,6 +15,8 @@ export default class CurrencyConverter extends LightningElement {
         return (new Date()).toLocaleString();
     }
 
+
+
     retrieveData() {
         fetch(`https://api.exchangeratesapi.io/latest?base=${this.base}`)
             .then(response => response.json())
@@ -22,10 +24,12 @@ export default class CurrencyConverter extends LightningElement {
                 this.rates = Object.keys(data.rates).map(key => {
                     return { 'code': key, 'value': data.rates[key], 'order': LocalSettings.getCurrencyOrder(key) };
                 });
+
                 this.lastRefreshDateTime = this.getCurrentDateTime();
 
                 setTimeout(() => {
                     console.log(this.rates);
+                    this.rates = this.rates.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));
                     this.currencyConverterCalc.reCalculateFromBaseToQuote();
                     this.currencyConverterList.showCurrentPageRates();
                 }, 500);

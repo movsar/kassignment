@@ -42,7 +42,7 @@ export default class CurrencyConverter extends LightningElement {
     getRandomQuoteCurrency(){
         let index = Math.floor(Math.random() * Math.floor(this.ratesPerPage));
 
-        while (this.currentPageRates[index] === this.baseCurrency){
+        while (this.currentPageRates[index].code === this.baseCurrency){
             index = Math.floor(Math.random() * Math.floor(this.ratesPerPage));
         }
 

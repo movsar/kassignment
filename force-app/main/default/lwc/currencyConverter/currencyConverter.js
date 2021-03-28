@@ -2,23 +2,22 @@ import { LightningElement, api, track } from 'lwc';
 import { LocalSettings } from 'c/utils';
 export default class CurrencyConverter extends LightningElement {
     @track rates = [];
-    initialized = false;
-    lastRefreshDateTime;
     @track currentPageRates = [];
 
-    currentPage = 1;
     totalPages = 1;
+    currentPage = 1;
 
+    lastRefreshDateTime;
+    initialized = false;
+
+    @track quoteCurrency;
+
+    //#region external parameters
     _baseCurrency = 'USD';
     @api get baseCurrency() {
-        console.log(`_baseCurrency ${this._baseCurrency}`);
         return this._baseCurrency;
     }
     set baseCurrency(value) {
-        console.log(`_baseCurrency ${this._baseCurrency}`);
-        if (value === this.quoteCurrency) {
-            return;
-        }
         this._baseCurrency = value;
     }
 
@@ -29,11 +28,7 @@ export default class CurrencyConverter extends LightningElement {
     set ratesPerPage(value) {
         this._ratesPerPage = value;
     }
-
-    baseChangeHandler(e) {
-        this.baseCurrency = e.detail;
-        this.retrieveData();
-    }
+    //#endregion
 
     getCurrentDateTime() {
         return (new Date()).toLocaleString();
@@ -63,7 +58,9 @@ export default class CurrencyConverter extends LightningElement {
                     console.log(this.rates);
                     this.rates = this.rates.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));
                     this.showCurrentPageRates();
-                    this.quoteCurrency = this.getRandomQuoteCurrency();
+                    if (!this.quoteCurrency || this.quoteCurrency === this.baseCurrency){
+                        this.quoteCurrency = this.getRandomQuoteCurrency();
+                    }
                     this.currencyConverterCalc.reCalculateFromBaseToQuote();
                     this.totalPages = Math.ceil(this.rates.length / this.ratesPerPage);
                 }, 500);
@@ -78,6 +75,7 @@ export default class CurrencyConverter extends LightningElement {
         this.currentPageRates = this.rates.slice(showFrom, showTo);
     }
 
+    //#region custom event handlers
     previousPageHandler() {
         if (--this.currentPage < 1) {
             this.currentPage = this.totalPages;
@@ -94,6 +92,13 @@ export default class CurrencyConverter extends LightningElement {
         this.showCurrentPageRates();
     }
 
+    baseChangeHandler(e) {
+        this.baseCurrency = e.detail;
+        this.retrieveData();
+    }
+    //#endregion
+
+    //#region lifecycle event handlers
     renderedCallback() {
         if (this.initialized === false && this.rates.length > 0) {
             this.initialized = true;
@@ -105,4 +110,5 @@ export default class CurrencyConverter extends LightningElement {
     connectedCallback() {
         this.retrieveData();
     }
+    //#endregion
 }

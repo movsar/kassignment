@@ -50,8 +50,8 @@
             quote-currency={quoteCurrency} 
             base-currency={baseCurrency} 
             rates={rates} 
-            onbasechange={baseChangeHandler}
-            onquotechange={quoteChangeHandler}>
+            onbasechange={baseCurrencyChangeHandler}
+            onquotechange={quoteCurrencyChangeHandler}>
           </c-currency-converter-calc>
         </div>
 
@@ -62,7 +62,7 @@
             rates={rates} 
             current-page={currentPage}
             total-pages={totalPages}
-            onbasechange={baseChangeHandler}
+            onbasechange={baseCurrencyChangeHandler}
             onpreviouspage={previousPageHandler}
             onnextpage={nextPageHandler}>
           </c-currency-converter-list>

@@ -30,16 +30,7 @@ export default class CurrencyConverter extends LightningElement {
     initialized = false;
     lastRefreshDateTime;
 
-    getRandomQuoteCurrency() {
-        let index = Utils.getRandomInt(0, this.ratesPerPage);
-
-        while (this.currentPageRates[index].code === this.baseCurrency) {
-            index = Utils.getRandomInt(0, this.ratesPerPage);
-        }
-
-        return this.currentPageRates[index].code;
-    }
-
+    //#region data
     parseRates(data) {
         let rates = Object.keys(data.rates).map(key => {
             return { 'code': key, 'value': data.rates[key], 'order': LocalSettings.getCurrencyOrder(key) };
@@ -57,18 +48,6 @@ export default class CurrencyConverter extends LightningElement {
         return rates;
     }
 
-    updateView() {
-        this.totalPages = Math.ceil(this.rates.length / this.ratesPerPage);
-        this.showCurrentPageRates();
-
-        if (!this.quoteCurrency) {
-            this.quoteCurrency = this.getRandomQuoteCurrency();
-        }
-
-        this.getCurrencyConverterCalcComponent().reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
-        this.lastRefreshDateTime = Utils.getCurrentDateTime();
-    }
-
     retrieveData() {
         fetch(`https://api.exchangeratesapi.io/latest?base=${this.baseCurrency}`)
             .then(response => response.json())
@@ -78,24 +57,59 @@ export default class CurrencyConverter extends LightningElement {
             })
             .catch(error => console.error(error));
     }
+    //#endregion
 
-    getCurrencyConverterCalcComponent() {
+    //#region view
+    get currencyConverterCalcComponent() {
         return this.template.querySelector("c-currency-converter-calc");
     }
 
-    showCurrentPageRates() {
+    getRandomQuoteCurrency() {
+        let index = Utils.getRandomInt(0, this.ratesPerPage);
+
+        while (this.currentPageRates[index].code === this.baseCurrency) {
+            index = Utils.getRandomInt(0, this.ratesPerPage);
+        }
+
+        return this.currentPageRates[index].code;
+    }
+
+    updateView() {
+        this.totalPages = Math.ceil(this.rates.length / this.ratesPerPage);
+        this.getCurrentPageRates();
+
+        if (!this.quoteCurrency) {
+            this.quoteCurrency = this.getRandomQuoteCurrency();
+        }
+
+        this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
+        this.lastRefreshDateTime = Utils.getCurrentDateTime();
+    }
+
+    getCurrentPageRates() {
         const showFrom = (this.currentPage - 1) * this.ratesPerPage;
         const showTo = showFrom + this.ratesPerPage;
         this.currentPageRates = this.rates.slice(showFrom, showTo);
     }
+    //#endregion
 
-    //#region custom event handlers
+    //#region event handlers
+    renderedCallback() {
+        if (this.initialized === false && this.rates.length > 0) {
+            this.initialized = true;
+        }
+    }
+
+    connectedCallback() {
+        this.retrieveData();
+    }
+
     previousPageHandler() {
         if (--this.currentPage < 1) {
             this.currentPage = this.totalPages;
         }
 
-        this.showCurrentPageRates();
+        this.getCurrentPageRates();
     }
 
     nextPageHandler() {
@@ -103,10 +117,10 @@ export default class CurrencyConverter extends LightningElement {
             this.currentPage = 1;
         }
 
-        this.showCurrentPageRates();
+        this.getCurrentPageRates();
     }
 
-    baseChangeHandler(e) {
+    baseCurrencyChangeHandler(e) {
         LocalSettings.incrementCurrencyOrder(e.detail);
 
         if (this.quoteCurrency === e.detail) {
@@ -116,7 +130,8 @@ export default class CurrencyConverter extends LightningElement {
         this.baseCurrency = e.detail;
         this.retrieveData();
     }
-    quoteChangeHandler(e) {
+
+    quoteCurrencyChangeHandler(e) {
         LocalSettings.incrementCurrencyOrder(e.detail);
 
         if (this.baseCurrency === e.detail) {
@@ -127,19 +142,7 @@ export default class CurrencyConverter extends LightningElement {
         }
 
         this.quoteCurrency = e.detail;
-        this.getCurrencyConverterCalcComponent().reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
-    }
-    //#endregion
-
-    //#region lifecycle event handlers
-    renderedCallback() {
-        if (this.initialized === false && this.rates.length > 0) {
-            this.initialized = true;
-        }
-    }
-
-    connectedCallback() {
-        this.retrieveData();
+        this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
     //#endregion
 }

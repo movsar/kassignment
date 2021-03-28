@@ -2,7 +2,6 @@ import { LightningElement, api, track } from 'lwc';
 import { LocalSettings, Constants, Utils } from 'c/utils';
 export default class CurrencyConverter extends LightningElement {
 
-
     //#region external parameters
     _baseCurrency = 'USD';
     @api get baseCurrency() {
@@ -32,28 +31,26 @@ export default class CurrencyConverter extends LightningElement {
     lastRefreshDateTime;
 
     //#region data
+    updateCachedDate(data) {
+        Utils.gbpRates = Object.keys(data.rates).map(key => {
+            return { 'code': key, 'value': data.rates[key] };
+        });
 
-    setRates() {
-        this.rates = Utils.calculateRates(this.baseCurrency);
-        // Sort by usage frequency
-        this.rates = this.rates.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));
+        // This is to address issue with API inconsistencies
+        if (!Utils.gbpRates.find(rate => rate.code === this.baseCurrency)) {
+            let baseRateObject = { 'code': this.baseCurrency, 'value': 1}
+            Utils.gbpRates.push(baseRateObject);
+        }
+
+        this.lastRefreshDateTime = Utils.getCurrentDateTime();
+        this.updateView();
     }
 
     retrieveData() {
         fetch(`https://api.exchangeratesapi.io/latest?base=GBP`)
             .then(response => response.json())
             .then(data => {
-                Utils.gbpRates = Object.keys(data.rates).map(key => {
-                    return { 'code': key, 'value': data.rates[key] };
-                });
-                // This is to address issue with API inconsistencies
-                if (!Utils.gbpRates.find(rate => rate.code === this.baseCurrency)) {
-                    let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order': LocalSettings.getCurrencyOrder(this.baseCurrency) }
-                    Utils.gbpRates.push(baseRateObject);
-                }
-
-                this.setRates();
-                this.updateView();
+                this.updateCachedDate(data);
             })
             .catch(error => console.error(error));
     }
@@ -75,6 +72,8 @@ export default class CurrencyConverter extends LightningElement {
     }
 
     updateView() {
+        this.rates = Utils.calculateRates(this.baseCurrency);
+
         this.totalPages = Math.ceil(this.rates.length / this.ratesPerPage);
         this.getCurrentPageRates();
 
@@ -83,7 +82,6 @@ export default class CurrencyConverter extends LightningElement {
         }
 
         this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
-        this.lastRefreshDateTime = Utils.getCurrentDateTime();
     }
 
     getCurrentPageRates() {
@@ -128,7 +126,7 @@ export default class CurrencyConverter extends LightningElement {
         }
 
         this.baseCurrency = e.detail;
-        this.setRates();
+        this.updateView();
         this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
 
@@ -138,11 +136,11 @@ export default class CurrencyConverter extends LightningElement {
         if (this.baseCurrency === e.detail) {
             this.baseCurrency = this.quoteCurrency;
             this.quoteCurrency = e.detail;
+            this.updateView();
             return;
         }
 
         this.quoteCurrency = e.detail;
-        this.setRates();
         this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
     //#endregion

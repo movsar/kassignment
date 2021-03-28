@@ -2,31 +2,32 @@ import { LightningElement } from 'lwc';
 import Id from '@salesforce/user/Id';
 
 const Utils = {
-    gbpRates:[],
-    calculateRates: function(baseCurrency){
+    gbpRates: [],
+    calculateRates: function (baseCurrency) {
         let ratesForNewBaseCurrency = [];
-        for (let i = 0; i < this.gbpRates.length; i++){
+        for (let i = 0; i < this.gbpRates.length; i++) {
             let newBaseRate = this.gbpRates.find(rate => rate.code === baseCurrency);
-            this.logAsPlainObject(newBaseRate);
             let gbpRate = this.gbpRates[i];
             let newRate = Object.assign({}, gbpRate);
-            this.logAsPlainObject(gbpRate);
-            this.logAsPlainObject(newRate);
 
             newRate.value = gbpRate.value / newBaseRate.value;
+            newRate.order = LocalSettings.getCurrencyOrder(newRate.code);
             ratesForNewBaseCurrency.push(newRate);
         }
 
+        // Sort by usage frequency
+        ratesForNewBaseCurrency = ratesForNewBaseCurrency.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));
+        
         return ratesForNewBaseCurrency;
     },
-    toPlainObject: function(obj) {
+    toPlainObject: function (obj) {
         return JSON.parse(JSON.stringify(obj));
     },
-    logAsPlainObject: function(obj){
+    logAsPlainObject: function (obj) {
         console.log('# logAsPlainObject #');
         console.log(this.toPlainObject(obj));
     },
-    getCurrentDateTime: function() {
+    getCurrentDateTime: function () {
         return (new Date()).toLocaleString();
     },
     getRandomInt(min, max) {

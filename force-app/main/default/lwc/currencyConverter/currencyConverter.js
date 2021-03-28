@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import { LocalSettings } from 'c/utils';
+import { LocalSettings, Constants } from 'c/utils';
 export default class CurrencyConverter extends LightningElement {
     //#region external parameters
     _baseCurrency = 'USD';
@@ -74,10 +74,12 @@ export default class CurrencyConverter extends LightningElement {
                 if (!this.quoteCurrency) {
                     this.quoteCurrency = this.getRandomQuoteCurrency();
                 }
+
+                const currencyConverterCalc = this.template.querySelector("c-currency-converter-calc");
+                currencyConverterCalc.reCalculate(retrievedRates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
             })
             .catch(error => console.error(error));
     }
-    currencyConverterCalc;
 
     showCurrentPageRates() {
         const showFrom = (this.currentPage - 1) * this.ratesPerPage;
@@ -119,8 +121,8 @@ export default class CurrencyConverter extends LightningElement {
     renderedCallback() {
         if (this.initialized === false && this.rates.length > 0) {
             this.initialized = true;
-            this.currencyConverterCalc = this.template.querySelector("c-currency-converter-calc");
-            this.currencyConverterList = this.template.querySelector("c-currency-converter-list");
+            // this.currencyConverterCalc = this.template.querySelector("c-currency-converter-calc");
+            // this.currencyConverterList = this.template.querySelector("c-currency-converter-list");
         }
     }
 

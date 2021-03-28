@@ -1,6 +1,10 @@
 import { LightningElement } from 'lwc';
 import Id from '@salesforce/user/Id';
 
+const Constants = {
+    QUOTE_TO_BASE: 'QUOTE_TO_BASE',
+    BASE_TO_QUOTE: 'BASE_TO_QUOTE'
+}
 
 const LocalSettings = {
     currencyOrderSettingsName: `currencyOrderSettings${Id}`,
@@ -33,4 +37,4 @@ const LocalSettings = {
     }
 }
 
-export { LocalSettings };
+export { LocalSettings, Constants };

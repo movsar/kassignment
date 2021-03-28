@@ -22,7 +22,7 @@ export default class CurrencyConverterCalc extends LightningElement {
             if (this.initialized === false && this.rates.length > 0) {
                 this.amountInBaseCurrency = 1;
                 this.initialized = true;
-                this.reCalculateFromBaseToQuote();
+                this.reCalculateFromBaseToQuote(this.rates, this.quoteCurrency, this.amountInBaseCurrency);
             }
         }
 
@@ -30,26 +30,30 @@ export default class CurrencyConverterCalc extends LightningElement {
             this.baseCurrencyHasChanged = false;
             // TODO: Change to a better approach
             setTimeout(() => {
-                this.reCalculateFromBaseToQuote();
+                this.reCalculateFromBaseToQuote(this.rates, this.quoteCurrency, this.amountInBaseCurrency);
             }, 500);
         }
     }
 
-    reCalculateFromQuoteToBase(){
-        if (!this.amountInQuoteCurrency || !this.exchangeRate){
+    reCalculateFromQuoteToBase(rates, quoteCurrency, amountInQuoteCurrency){
+        if (!rates || !amountInQuoteCurrency || !quoteCurrency){
+            console.error('reCalculateFromQuoteToBase: Incorrect Input');
             return;
         }
 
-        this.amountInBaseCurrency = parseFloat((this.amountInQuoteCurrency / this.exchangeRate).toFixed(3));
+        const exchangeRate = rates.find(rate => rate.code == quoteCurrency).value;
+        this.amountInBaseCurrency = parseFloat((amountInQuoteCurrency / exchangeRate).toFixed(3));
     }
 
     @api
-    reCalculateFromBaseToQuote(){
-        if (!this.amountInBaseCurrency || !this.exchangeRate){
+    reCalculateFromBaseToQuote(rates, quoteCurrency, amountInBaseCurrency){
+        if (!rates || !amountInBaseCurrency || !quoteCurrency){
+            console.error('reCalculateFromQuoteToBase: Incorrect Input');
             return;
         }
 
-        this.amountInQuoteCurrency = parseFloat((this.amountInBaseCurrency * this.exchangeRate).toFixed(3));
+        const exchangeRate = rates.find(rate => rate.code == quoteCurrency).value;
+        this.amountInQuoteCurrency = parseFloat((amountInBaseCurrency * exchangeRate).toFixed(3));
     }
 
     //#region event handlers
@@ -59,7 +63,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         }
         this.amountInQuoteCurrency = parseFloat(this.amountInQuoteCurrencyElement.value);
 
-        this.reCalculateFromQuoteToBase();
+        this.reCalculateFromQuoteToBase(this.rates, this.quoteCurrency, this.amountInQuoteCurrency);
     }
 
     handleBaseCurrencyAmountChange() {
@@ -68,7 +72,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         }
         this.amountInBaseCurrency = parseFloat(this.amountInBaseCurrencyElement.value);
 
-        this.reCalculateFromBaseToQuote();
+        this.reCalculateFromBaseToQuote(this.rates, this.quoteCurrency, this.amountInBaseCurrency);
     }
 
     handleSelectedBaseCurrencyChange() {
@@ -92,7 +96,7 @@ export default class CurrencyConverterCalc extends LightningElement {
 
         this.quoteCurrency = this.quoteCurrencyElement.value;
         this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
-        this.reCalculateFromBaseToQuote();    
+        this.reCalculateFromBaseToQuote(this.rates, this.quoteCurrency, this.amountInBaseCurrency);   
     }
     //#endregion
 
@@ -102,10 +106,6 @@ export default class CurrencyConverterCalc extends LightningElement {
 
     get ratesAsComboboxOptions() {
         return this.rates.map(rate => { return { 'label': rate.code, 'value': rate.code }; });
-    }
-
-    get exchangeRate() {
-        return (this.rates.find(rate => rate.code == this.quoteCurrency)).value;
     }
 
     // #region html refs

@@ -13,6 +13,13 @@ export default class CurrencyConverterCalc extends LightningElement {
     quoteCurrency;
     amountInQuoteCurrency;
 
+    getRandomQuoteCurrency(){
+        let index = Math.floor(Math.random() * Math.floor(this.ratesPerPage));
+       
+      
+        
+    }
+
     renderedCallback() {
         if (this.initialized === false && this.rates.length > 0) {
             // Initialize form controls

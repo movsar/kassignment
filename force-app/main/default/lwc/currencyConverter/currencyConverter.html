@@ -45,11 +45,11 @@
     <div class="slds-card__body slds-card__body_inner">
       <div class="slds-grid slds-gutters">
         <div class="slds-col slds-size_2-of-3">
-          <c-currency-converter-calc base={base} rates={rates} onbasechange={baseChangeHandler}>
+          <c-currency-converter-calc base={baseCurrency} rates={rates} onbasechange={baseChangeHandler}>
           </c-currency-converter-calc>
         </div>
         <div class="slds-col slds-size_1-of-3">
-          <c-currency-converter-list base={base} rates={rates} onbasechange={baseChangeHandler}>
+          <c-currency-converter-list base={baseCurrency} rates={rates} onbasechange={baseChangeHandler}>
           </c-currency-converter-list>
         </div>
       </div>

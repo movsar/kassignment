@@ -6,5 +6,23 @@
         <target>
             lightning__Tab
         </target>
+        <target>
+            lightningCommunity__Page
+        </target>
+        <target>
+            lightningCommunity__Default
+        </target>
+        <target>lightning__AppPage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="baseCurrency" type="String" default="USD"></property>
+            <property name="ratesPerPage" type="Integer" default="8"></property>
+        </targetConfig>
+
+        <targetConfig targets="lightning__AppPage">
+            <property name="baseCurrency" type="String" default="USD"></property>
+            <property name="ratesPerPage" type="Integer" default="8"></property>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

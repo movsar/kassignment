@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import { LocalSettings, Constants } from 'c/utils';
+import { LocalSettings, Utils, Constants } from 'c/utils';
 export default class CurrencyConverterCalc extends LightningElement {
     @api baseCurrency;
     @api quoteCurrency;
@@ -23,6 +23,8 @@ export default class CurrencyConverterCalc extends LightningElement {
             return;
         }
 
+       // rates = Utils.calculateRates(this.baseCurrency);
+       // Utils.logAsPlainObject(rates);
         const exchangeRate = rates.find(rate => rate.code == this.quoteCurrency).value;
 
         if (direction === Constants.BASE_TO_QUOTE){

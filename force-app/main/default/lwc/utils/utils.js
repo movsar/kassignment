@@ -2,6 +2,20 @@ import { LightningElement } from 'lwc';
 import Id from '@salesforce/user/Id';
 
 const Utils = {
+    ratesForGbp,
+    calculateRates: function(baseCurrency){
+        realBaseCurrency = 'GBP';
+        ratesForNewBaseCurrency = [];
+        for (let i = 0; i < this.ratesForGbp.length; i++){
+            newBaseGbpExchangeRate = this.ratesForGbp.find(rate => rate.code === baseCurrency).value;
+            let gbpRate = ratesForGbp[i];
+            let newRate = Object.assign(newRate, rate);
+            newRate.value = gbpRate.value / newBaseGbpExchangeRate;
+            ratesForNewBaseCurrency.push(newRate);
+        }
+
+        return ratesForNewBaseCurrency;
+    },
     toPlainObject: function(obj) {
         return JSON.parse(JSON.stringify(obj));
     },

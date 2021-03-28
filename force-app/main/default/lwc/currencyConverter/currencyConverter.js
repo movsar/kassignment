@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import { LocalSettings, Constants, Utils } from 'c/utils';
 export default class CurrencyConverter extends LightningElement {
+    
 
     //#region external parameters
     _baseCurrency = 'USD';
@@ -128,7 +129,7 @@ export default class CurrencyConverter extends LightningElement {
         }
 
         this.baseCurrency = e.detail;
-        this.retrieveData();
+        this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
 
     quoteCurrencyChangeHandler(e) {
@@ -137,7 +138,6 @@ export default class CurrencyConverter extends LightningElement {
         if (this.baseCurrency === e.detail) {
             this.baseCurrency = this.quoteCurrency;
             this.quoteCurrency = e.detail;
-            this.retrieveData();
             return;
         }
 

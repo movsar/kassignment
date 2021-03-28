@@ -4,8 +4,7 @@
       <ul>
         <template for:each={currentPageRates} for:item="rate">
           <li key={rate.code}>
-            <button class="slds-button slds-button_outline-brand slds-col slds-size_1-of-1" onclick={rateClickHandler}
-              data-currency={rate.code}>
+            <button class={rateStyle} onclick={rateClickHandler} data-currency={rate.code}>
               <lightning-formatted-number value={rate.value} format-style="currency" currency-code={rate.code}
                 currency-display-as="code">
               </lightning-formatted-number>

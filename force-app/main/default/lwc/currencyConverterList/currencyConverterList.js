@@ -1,5 +1,4 @@
-import { LightningElement, api, track } from 'lwc';
-import { LocalSettings } from 'c/utils';
+import { LightningElement, api } from 'lwc';
 
 export default class CurrencyConverterList extends LightningElement {
     @api base;
@@ -10,17 +9,15 @@ export default class CurrencyConverterList extends LightningElement {
 
     initialized = false;
 
-    rateClickHandler(event) {
-        const newBase = event.currentTarget.dataset.currency;
-        if (this.base === newBase){
+    currenciesListItemClickHandler(event) {
+        const newBaseCurrency = event.currentTarget.dataset.currency;
+        if (this.base === newBaseCurrency){
             return;
         }
 
-        LocalSettings.incrementCurrencyOrder(newBase);
-        this.dispatchEvent(new CustomEvent('basechange', { detail: newBase }));
+        this.dispatchEvent(new CustomEvent('basechange', { detail: newBaseCurrency }));
     }
 
-    //#region pagination
     previousButtonClickHandler() {
         this.dispatchEvent(new CustomEvent('previouspage'));
     }
@@ -28,5 +25,4 @@ export default class CurrencyConverterList extends LightningElement {
     nextButtonClickHandler() {
         this.dispatchEvent(new CustomEvent('nextpage'));
     }
-    //#endregion
 }

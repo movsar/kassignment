@@ -16,7 +16,7 @@
                   step=".001"
                   placeholder="0.000"
                   value={amountInBaseCurrency} 
-                  oninput={handleBaseCurrencyAmountChange}/>
+                  oninput={baseCurrencyAmountChangeHandler}/>
               </div>
             </div>
 
@@ -27,7 +27,7 @@
               data-id="selectedBaseCurrency" 
               options={ratesAsComboboxOptions}
               value={baseCurrency} 
-              onchange={handleSelectedBaseCurrencyChange}>
+              onchange={baseCurrencyChangeHandler}>
             </lightning-combobox>
           </div>
         </div>
@@ -46,7 +46,7 @@
                   step=".001"
                   placeholder="0.000"
                   value={amountInQuoteCurrency} 
-                  oninput={handleQuoteCurrencyAmountChange}/>
+                  oninput={quoteCurrencyAmountChangeHandler}/>
               </div>
             </div>
 
@@ -57,7 +57,7 @@
               data-id="selectedQuoteCurrency" 
               options={ratesAsComboboxOptions}
               value={quoteCurrency} 
-              onchange={handleSelectedQuoteCurrencyChange}>
+              onchange={quoteCurrencyChangeHandler}>
             </lightning-combobox>
           </div>
         </div>

@@ -35,7 +35,7 @@ export default class CurrencyConverterCalc extends LightningElement {
     }
 
     //#region event handlers
-    handleQuoteCurrencyAmountChange() {
+    quoteCurrencyAmountChangeHandler() {
         if (this.amountInQuoteCurrency === this.amountInQuoteCurrencyElement.value) {
             return;
         }
@@ -43,7 +43,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         this.reCalculate(this.rates, Constants.QUOTE_TO_BASE);
     }
 
-    handleBaseCurrencyAmountChange() {
+    baseCurrencyAmountChangeHandler() {
         if (this.amountInBaseCurrency === this.amountInBaseCurrencyElement.value) {
             return;
         }
@@ -51,11 +51,11 @@ export default class CurrencyConverterCalc extends LightningElement {
         this.reCalculate(this.rates, Constants.BASE_TO_QUOTE);
     }
 
-    handleSelectedBaseCurrencyChange() {
+    baseCurrencyChangeHandler() {
         this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrencyElement.value }));
     }
 
-    handleSelectedQuoteCurrencyChange() {
+    quoteCurrencyChangeHandler() {
         this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrencyElement.value }));
     }
     //#endregion

@@ -11,7 +11,9 @@
                 <input id="text-input-id-1" 
                   class="slds-input" 
                   data-id="amountInBaseCurrency" 
-                  type="number" 
+                  type="number"
+                  min="0"
+                  step=".001"
                   placeholder="0.000"
                   value={amountInBaseCurrency} 
                   oninput={handleBaseCurrencyAmountChange}/>
@@ -40,6 +42,8 @@
                   class="slds-input" 
                   data-id="amountInQuoteCurrency" 
                   type="number"
+                  min="0"
+                  step=".001"
                   placeholder="0.000"
                   value={amountInQuoteCurrency} 
                   oninput={handleQuoteCurrencyAmountChange}/>

@@ -53,22 +53,27 @@ export default class CurrencyConverter extends LightningElement {
         fetch(`https://api.exchangeratesapi.io/latest?base=${this.baseCurrency}`)
             .then(response => response.json())
             .then(data => {
-                this.rates = Object.keys(data.rates).map(key => {
+                let retrievedRates = Object.keys(data.rates).map(key => {
                     return { 'code': key, 'value': data.rates[key], 'order': LocalSettings.getCurrencyOrder(key) };
                 });
 
+                // This is to address issue with API inconsistencies
+                if (!retrievedRates.find(rate => rate.code === this.baseCurrency)) {
+                    let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order':0 }
+                    retrievedRates.push(baseRateObject);
+                }
+
+                this.totalPages = Math.ceil(retrievedRates.length / this.ratesPerPage);
                 this.lastRefreshDateTime = this.getCurrentDateTime();
 
-                setTimeout(() => {
-                    this.rates = this.rates.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));
-                    this.showCurrentPageRates();
-                    if (!this.quoteCurrency) {
-                        this.quoteCurrency = this.getRandomQuoteCurrency();
-                    }
-
-                    this.currencyConverterCalc.reCalculateFromBaseToQuote();
-                    this.totalPages = Math.ceil(this.rates.length / this.ratesPerPage);
-                }, 500);
+                // Order by use frequency i.e. favorites implementation
+                this.rates = retrievedRates.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));
+                
+                this.showCurrentPageRates();
+                
+                if (!this.quoteCurrency) {
+                    this.quoteCurrency = this.getRandomQuoteCurrency();
+                }
             })
             .catch(error => console.error(error));
     }
@@ -98,7 +103,7 @@ export default class CurrencyConverter extends LightningElement {
     }
 
     baseChangeHandler(e) {
-        if (this.quoteCurrency === e.detail){
+        if (this.quoteCurrency === e.detail) {
             this.quoteCurrency = this.baseCurrency;
         }
 

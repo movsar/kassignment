@@ -1,7 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 import { LocalSettings, Constants, Utils } from 'c/utils';
 export default class CurrencyConverter extends LightningElement {
-    
+
 
     //#region external parameters
     _baseCurrency = 'USD';
@@ -32,28 +32,27 @@ export default class CurrencyConverter extends LightningElement {
     lastRefreshDateTime;
 
     //#region data
-    parseRates(data) {
-        let rates = Object.keys(data.rates).map(key => {
-            return { 'code': key, 'value': data.rates[key], 'order': LocalSettings.getCurrencyOrder(key) };
-        });
 
-        // This is to address issue with API inconsistencies
-        if (!rates.find(rate => rate.code === this.baseCurrency)) {
-            let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order': LocalSettings.getCurrencyOrder(this.baseCurrency) }
-            rates.push(baseRateObject);
-        }
-
+    setRates() {
+        this.rates = Utils.calculateRates(this.baseCurrency);
         // Sort by usage frequency
         this.rates = this.rates.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));
-
-        return rates;
     }
 
     retrieveData() {
-        fetch(`https://api.exchangeratesapi.io/latest?base=${this.baseCurrency}`)
+        fetch(`https://api.exchangeratesapi.io/latest?base=GBP`)
             .then(response => response.json())
             .then(data => {
-                this.rates = this.parseRates(data);
+                Utils.gbpRates = Object.keys(data.rates).map(key => {
+                    return { 'code': key, 'value': data.rates[key] };
+                });
+                // This is to address issue with API inconsistencies
+                if (!Utils.gbpRates.find(rate => rate.code === this.baseCurrency)) {
+                    let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order': LocalSettings.getCurrencyOrder(this.baseCurrency) }
+                    Utils.gbpRates.push(baseRateObject);
+                }
+
+                this.setRates();
                 this.updateView();
             })
             .catch(error => console.error(error));
@@ -129,6 +128,7 @@ export default class CurrencyConverter extends LightningElement {
         }
 
         this.baseCurrency = e.detail;
+        this.setRates();
         this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
 
@@ -142,6 +142,7 @@ export default class CurrencyConverter extends LightningElement {
         }
 
         this.quoteCurrency = e.detail;
+        this.setRates();
         this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
     //#endregion

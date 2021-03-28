@@ -108,6 +108,8 @@ export default class CurrencyConverter extends LightningElement {
     }
 
     baseChangeHandler(e) {
+        LocalSettings.incrementCurrencyOrder(e.detail);
+        
         if (this.quoteCurrency === e.detail) {
             this.quoteCurrency = this.baseCurrency;
         }
@@ -116,13 +118,17 @@ export default class CurrencyConverter extends LightningElement {
         this.retrieveData();
     }
     quoteChangeHandler(e) {
+        LocalSettings.incrementCurrencyOrder(e.detail);
+
         if (this.baseCurrency === e.detail) {
             this.baseCurrency = this.quoteCurrency;
             this.quoteCurrency = e.detail;
             this.retrieveData();
             return;
         }
+
         this.quoteCurrency = e.detail;
+        this.getCurrencyConverterCalcComponent().reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
     //#endregion
 

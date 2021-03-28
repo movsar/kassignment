@@ -3,13 +3,14 @@
     <div class="slds-col">
       <ul>
         <template for:each={currentPageRates} for:item="rate">
-          <li key={rate.code}>
-            <button class={rateStyle} onclick={rateClickHandler} data-currency={rate.code}>
-              <lightning-formatted-number value={rate.value} format-style="currency" currency-code={rate.code}
-                currency-display-as="code">
-              </lightning-formatted-number>
-            </button>
-          </li>
+            <c-currency-converter-list-item 
+              data-currency={rate.code} 
+              key={rate.code} 
+              onclick={rateClickHandler} 
+              rate={rate}
+              base={base}
+              >
+            </c-currency-converter-list-item>
         </template>
       </ul>
 

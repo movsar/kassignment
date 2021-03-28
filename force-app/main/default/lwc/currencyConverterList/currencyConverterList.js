@@ -10,10 +10,6 @@ export default class CurrencyConverterList extends LightningElement {
 
     initialized = false;
 
-    get rateStyle(){
-        return 'slds-button slds-button_outline-brand slds-col slds-size_1-of-1';
-    }
-
     rateClickHandler(event) {
         const newBase = event.currentTarget.dataset.currency;
         if (this.base === newBase){

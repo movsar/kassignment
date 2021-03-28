@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
-import { LocalSettings, Constants } from 'c/utils';
+import { LocalSettings, Constants, Utils } from 'c/utils';
 export default class CurrencyConverter extends LightningElement {
+    
     //#region external parameters
     _baseCurrency = 'USD';
     @api get baseCurrency() {
@@ -29,42 +30,38 @@ export default class CurrencyConverter extends LightningElement {
     initialized = false;
     lastRefreshDateTime;
 
-    getCurrentDateTime() {
-        return (new Date()).toLocaleString();
-    }
-
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
-    }
-
     getRandomQuoteCurrency() {
-        let index = this.getRandomInt(0, this.ratesPerPage);
+        let index = Utils.getRandomInt(0, this.ratesPerPage);
 
         while (this.currentPageRates[index].code === this.baseCurrency) {
-            index = this.getRandomInt(0, this.ratesPerPage);
+            index = Utils.getRandomInt(0, this.ratesPerPage);
         }
 
         return this.currentPageRates[index].code;
+    }
+
+    mapApiData(data){
+        let rates = Object.keys(data.rates).map(key => {
+            return { 'code': key, 'value': data.rates[key], 'order': LocalSettings.getCurrencyOrder(key) };
+        });
+
+        // This is to address issue with API inconsistencies
+        if (!rates.find(rate => rate.code === this.baseCurrency)) {
+            let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order': LocalSettings.getCurrencyOrder(this.baseCurrency) }
+            rates.push(baseRateObject);
+        }
+
+        return rates;
     }
 
     retrieveData() {
         fetch(`https://api.exchangeratesapi.io/latest?base=${this.baseCurrency}`)
             .then(response => response.json())
             .then(data => {
-                this.rates = Object.keys(data.rates).map(key => {
-                    return { 'code': key, 'value': data.rates[key], 'order': LocalSettings.getCurrencyOrder(key) };
-                });
-
-                // This is to address issue with API inconsistencies
-                if (!this.rates.find(rate => rate.code === this.baseCurrency)) {
-                    let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order': LocalSettings.getCurrencyOrder(this.baseCurrency) }
-                    this.rates.push(baseRateObject);
-                }
+                this.rates = this.mapApiData(data);
 
                 this.totalPages = Math.ceil(this.rates.length / this.ratesPerPage);
-                this.lastRefreshDateTime = this.getCurrentDateTime();
+                this.lastRefreshDateTime = Utils.getCurrentDateTime();
 
                 // Order by use frequency i.e. favorites implementation
                 this.rates = this.rates.sort((a, b) => (a.order > b.order) ? -1 : ((a.order < b.order) ? 1 : 0));

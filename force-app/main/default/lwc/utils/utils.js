@@ -8,6 +8,14 @@ const Utils = {
     logAsPlainObject: function(obj){
         console.log('# logAsPlainObject #');
         console.log(this.toPlainObject(obj));
+    },
+    getCurrentDateTime: function() {
+        return (new Date()).toLocaleString();
+    },
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
     }
 }
 
@@ -45,4 +53,4 @@ const LocalSettings = {
     }
 }
 
-export { LocalSettings, Constants };
+export { LocalSettings, Constants, Utils };

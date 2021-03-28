@@ -59,7 +59,7 @@ export default class CurrencyConverter extends LightningElement {
 
                 // This is to address issue with API inconsistencies
                 if (!this.rates.find(rate => rate.code === this.baseCurrency)) {
-                    let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order':0 }
+                    let baseRateObject = { 'code': this.baseCurrency, 'value': 1, 'order': LocalSettings.getCurrencyOrder(this.baseCurrency) }
                     this.rates.push(baseRateObject);
                 }
 

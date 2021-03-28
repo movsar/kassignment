@@ -61,13 +61,11 @@ export default class CurrencyConverterCalc extends LightningElement {
 
     handleSelectedBaseCurrencyChange() {
         this.baseCurrency = this.baseCurrencyElement.value;
-        LocalSettings.incrementCurrencyOrder(this.baseCurrency);
         this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
     }
 
     handleSelectedQuoteCurrencyChange() {
         this.quoteCurrency = this.quoteCurrencyElement.value;
-        LocalSettings.incrementCurrencyOrder(this.quoteCurrency);
         this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
     }
     //#endregion

@@ -1,24 +1,12 @@
 import { LightningElement, api, track } from 'lwc';
 import { LocalSettings, Constants } from 'c/utils';
 export default class CurrencyConverterCalc extends LightningElement {
-    @api base;
-    @api quote;
+    @api baseCurrency;
+    @api quoteCurrency;
     @api rates;
 
-    initialized = false;
-
-    baseCurrency;
     amountInBaseCurrency = 1;
-
-    quoteCurrency;
     amountInQuoteCurrency;
-
-    renderedCallback() {
-        if (this.quote && this.base){
-            this.baseCurrency = this.base;
-            this.quoteCurrency = this.quote;
-        }
-    }
 
     @api
     reCalculate(rates, direction, quoteCurrency){
@@ -60,13 +48,11 @@ export default class CurrencyConverterCalc extends LightningElement {
     }
 
     handleSelectedBaseCurrencyChange() {
-        this.baseCurrency = this.baseCurrencyElement.value;
-        this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
+        this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrencyElement.value }));
     }
 
     handleSelectedQuoteCurrencyChange() {
-        this.quoteCurrency = this.quoteCurrencyElement.value;
-        this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
+        this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrencyElement.value }));
     }
     //#endregion
 

@@ -12,6 +12,10 @@ export default class CurrencyConverterList extends LightningElement {
 
     rateClickHandler(event) {
         const newBase = event.currentTarget.dataset.currency;
+        if (this.base === newBase){
+            return;
+        }
+
         LocalSettings.incrementCurrencyOrder(newBase);
         this.dispatchEvent(new CustomEvent('basechange', { detail: newBase }));
     }

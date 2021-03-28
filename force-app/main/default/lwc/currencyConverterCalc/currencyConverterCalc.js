@@ -3,7 +3,6 @@ import { LocalSettings } from 'c/utils';
 export default class CurrencyConverterCalc extends LightningElement {
     @api base;
     @api quote;
-
     @api rates;
 
     initialized = false;
@@ -16,14 +15,15 @@ export default class CurrencyConverterCalc extends LightningElement {
     amountInQuoteCurrency;
 
     renderedCallback() {
-        if (this.initialized === false && this.quote && this.base && this.rates.length > 0) {
-            // Initialize form controls
+        if (this.quote && this.base){
             this.baseCurrency = this.base;
-            console.log(this.quote);
             this.quoteCurrency = this.quote;
-            this.amountInBaseCurrency = 1;
-            this.initialized = true;
-            this.reCalculateFromBaseToQuote();
+
+            if (this.initialized === false && this.rates.length > 0) {
+                this.amountInBaseCurrency = 1;
+                this.initialized = true;
+                this.reCalculateFromBaseToQuote();
+            }
         }
 
         if (this.baseCurrencyHasChanged === true){
@@ -48,7 +48,6 @@ export default class CurrencyConverterCalc extends LightningElement {
         if (!this.amountInBaseCurrency || !this.exchangeRate){
             return;
         }
-        this.baseCurrency = this.base;
 
         this.amountInQuoteCurrency = parseFloat((this.amountInBaseCurrency * this.exchangeRate).toFixed(3));
     }
@@ -72,10 +71,10 @@ export default class CurrencyConverterCalc extends LightningElement {
         this.reCalculateFromBaseToQuote();
     }
 
-
     handleSelectedBaseCurrencyChange() {
         if (this.quoteCurrency === this.baseCurrencyElement.value) {
             this.quoteCurrency = this.baseCurrency;
+            this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
         }
         
         this.baseCurrencyHasChanged = true;
@@ -92,6 +91,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         }
 
         this.quoteCurrency = this.quoteCurrencyElement.value;
+        this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
         this.reCalculateFromBaseToQuote();    
     }
     //#endregion

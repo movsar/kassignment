@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>baseCurrency</name>
+                    <value>GBP</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>ratesPerPage</name>
+                    <value>9</value>
+                </componentInstanceProperties>
+                <componentName>currencyConverter</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>CurrencyConverterAppPage</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>

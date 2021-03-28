@@ -1,0 +1,65 @@
+{
+  "appPageId" : "ba750c88-dc4d-4373-a62d-3a5fc98e0b0d",
+  "componentName" : "community_layout:sldsFlexibleLayout",
+  "id" : "641f0b76-a549-4fb7-bdd6-6e615ca0ee80",
+  "label" : "Home",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "sectionConfig" : "{\"UUID\":\"54dfc807-5cd4-47c9-839b-a88cebe727f0\",\"columns\":[{\"UUID\":\"7a0c87c2-70ff-4989-82e6-95a40ffbec44\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"6\",\"seedComponents\":null},{\"UUID\":\"acc46214-2c12-4dc9-aa64-9093457c380a\",\"columnName\":\"Column 2\",\"columnKey\":\"32785\",\"columnWidth\":\"6\",\"seedComponents\":[]}]}"
+      },
+      "componentName" : "community_layout:section",
+      "id" : "54dfc807-5cd4-47c9-839b-a88cebe727f0",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "baseCurrency" : "RUB",
+            "ratesPerPage" : 10
+          },
+          "componentName" : "c:currencyConverter",
+          "id" : "ec99914a-0e55-4d02-8cf8-fac06bddfd31",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "7a0c87c2-70ff-4989-82e6-95a40ffbec44",
+        "regionLabel" : "Column 1",
+        "regionName" : "col1",
+        "renditionMap" : { },
+        "type" : "region"
+      }, {
+        "id" : "acc46214-2c12-4dc9-aa64-9093457c380a",
+        "regionLabel" : "Column 2",
+        "regionName" : "32785",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "f840df5d-e034-4220-bbed-342334d1afbe",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "description" : "",
+        "metaTags" : "",
+        "pageTitle" : "Home",
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "community_builder:seoAssistant",
+      "id" : "52d7a256-78a4-4775-bb50-2241c8fd02ce",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "e41c23a7-acc5-4fed-9718-42abd4480ee9",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "home"
+}

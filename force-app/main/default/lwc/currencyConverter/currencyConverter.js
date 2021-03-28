@@ -103,13 +103,9 @@ export default class CurrencyConverter extends LightningElement {
         }
 
         this.baseCurrency = e.detail;
-        console.log('baseCurrency ' + this.baseCurrency);
-        console.log('quoteCurrency ' + this.quoteCurrency);
-
         this.retrieveData();
     }
     quoteChangeHandler(e) {
-        console.log('quoteCurrency ' + this.quoteCurrency);
         this.quoteCurrency = e.detail;
     }
     //#endregion

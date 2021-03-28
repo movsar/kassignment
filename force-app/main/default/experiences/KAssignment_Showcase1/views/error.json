@@ -1,0 +1,58 @@
+{
+  "appPageId" : "ba750c88-dc4d-4373-a62d-3a5fc98e0b0d",
+  "componentName" : "community_layout:sldsFlexibleLayout",
+  "id" : "a5c0f2ac-41ee-44bc-8994-95f6a345d686",
+  "label" : "Error",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "sectionConfig" : "{\"UUID\":\"642ae40f-ebb2-4a19-93b1-c6b78d785905\",\"columns\":[{\"UUID\":\"6e279692-1973-461d-a78f-d16ebf38315c\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}"
+      },
+      "componentName" : "community_layout:section",
+      "id" : "642ae40f-ebb2-4a19-93b1-c6b78d785905",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "richTextValue" : "<p style=\"text-align: center;\">Invalid Page</p>"
+          },
+          "componentName" : "community_builder:richTextEditor",
+          "id" : "1b367f33-07e2-4a8f-816b-e08f70f6f3df",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "6e279692-1973-461d-a78f-d16ebf38315c",
+        "regionLabel" : "Column 1",
+        "regionName" : "col1",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "bc64c612-682f-4258-b17b-b8fd78070f31",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "description" : "",
+        "metaTags" : "",
+        "pageTitle" : "Error",
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "community_builder:seoAssistant",
+      "id" : "b03133d3-e51c-46c5-a7b4-ca1940c11e95",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "928fdab4-0b2b-4e82-8252-c0bf5281f566",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "error"
+}

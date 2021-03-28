@@ -1,0 +1,21 @@
+{
+  "definitionName" : "talon-template-byo:branding",
+  "id" : "e26f43c3-a48a-4ab5-b4eb-1af67dfca475",
+  "label" : "talon-template-byo:branding",
+  "type" : "brandingSet",
+  "values" : {
+    "ActionColor" : "#2574A9",
+    "BorderColor" : "#D4D4D4",
+    "CardBackgroundColor" : "#fff",
+    "DetailTextColor" : "#696969",
+    "ErrorTextColor" : "#ff9e9e",
+    "HeaderImage" : "/assets/img/desert.svg",
+    "LinkColor" : "#2574A9",
+    "OverlayTextColor" : "#FFFFFF",
+    "PrimaryFont" : "Salesforce Sans",
+    "SnaHeroImage" : "/assets/img/serviceNotAvailable.svg",
+    "TalonLogo" : "",
+    "TextCase" : "uppercase",
+    "TextColor" : "#333"
+  }
+}

@@ -8,6 +8,10 @@ export default class CurrencyConverterCalc extends LightningElement {
     amountInBaseCurrency = 1;
     amountInQuoteCurrency;
 
+    get ratesAsComboboxOptions() {
+        return this.rates.map(rate => { return { 'label': rate.code, 'value': rate.code }; });
+    }
+
     @api
     reCalculate(rates, direction, quoteCurrency){
         if (quoteCurrency){
@@ -55,10 +59,6 @@ export default class CurrencyConverterCalc extends LightningElement {
         this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrencyElement.value }));
     }
     //#endregion
-
-    get ratesAsComboboxOptions() {
-        return this.rates.map(rate => { return { 'label': rate.code, 'value': rate.code }; });
-    }
 
     // #region html refs
     get quoteCurrencyElement() {

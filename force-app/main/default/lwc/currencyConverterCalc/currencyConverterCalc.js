@@ -8,7 +8,7 @@ export default class CurrencyConverterCalc extends LightningElement {
     initialized = false;
 
     baseCurrency;
-    amountInBaseCurrency;
+    amountInBaseCurrency = 1;
 
     quoteCurrency;
     amountInQuoteCurrency;
@@ -17,13 +17,6 @@ export default class CurrencyConverterCalc extends LightningElement {
         if (this.quote && this.base){
             this.baseCurrency = this.base;
             this.quoteCurrency = this.quote;
-
-            if (this.initialized === false && this.rates.length > 0) {
-                this.amountInBaseCurrency = 1;
-                this.initialized = true;
-                
-                this.reCalculate(this.rates, Constants.BASE_TO_QUOTE);
-            }
         }
     }
 

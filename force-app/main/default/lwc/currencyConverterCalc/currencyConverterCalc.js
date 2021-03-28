@@ -55,7 +55,6 @@ export default class CurrencyConverterCalc extends LightningElement {
             return;
         }
         this.amountInQuoteCurrency = parseFloat(this.amountInQuoteCurrencyElement.value);
-
         this.reCalculate(this.rates, Constants.QUOTE_TO_BASE);
     }
 
@@ -64,36 +63,21 @@ export default class CurrencyConverterCalc extends LightningElement {
             return;
         }
         this.amountInBaseCurrency = parseFloat(this.amountInBaseCurrencyElement.value);
-
         this.reCalculate(this.rates, Constants.BASE_TO_QUOTE);
     }
 
     handleSelectedBaseCurrencyChange() {
-        if (this.quoteCurrency === this.baseCurrencyElement.value) {
-            this.quoteCurrency = this.baseCurrency;
-            this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
-        }
-        
         this.baseCurrency = this.baseCurrencyElement.value;
         LocalSettings.incrementCurrencyOrder(this.baseCurrency);
         this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
     }
 
     handleSelectedQuoteCurrencyChange() {
-        if (this.quoteCurrencyElement.value === this.baseCurrency) {
-            this.baseCurrency = this.quoteCurrency;
-            this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
-        }
-
         this.quoteCurrency = this.quoteCurrencyElement.value;
+        LocalSettings.incrementCurrencyOrder(this.quoteCurrency);
         this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
-        this.reCalculate(this.rates, Constants.BASE_TO_QUOTE);
     }
     //#endregion
-
-    toPlainObject(obj) {
-        return JSON.parse(JSON.stringify(obj));
-    }
 
     get ratesAsComboboxOptions() {
         return this.rates.map(rate => { return { 'label': rate.code, 'value': rate.code }; });

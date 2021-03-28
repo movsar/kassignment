@@ -75,10 +75,13 @@ export default class CurrencyConverter extends LightningElement {
                     this.quoteCurrency = this.getRandomQuoteCurrency();
                 }
 
-                const currencyConverterCalc = this.template.querySelector("c-currency-converter-calc");
-                currencyConverterCalc.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
+                this.getCurrencyConverterCalcComponent().reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
             })
             .catch(error => console.error(error));
+    }
+
+    getCurrencyConverterCalcComponent(){
+        return this.template.querySelector("c-currency-converter-calc");
     }
 
     showCurrentPageRates() {
@@ -113,6 +116,12 @@ export default class CurrencyConverter extends LightningElement {
         this.retrieveData();
     }
     quoteChangeHandler(e) {
+        if (this.baseCurrency === e.detail) {
+            this.baseCurrency = this.quoteCurrency;
+            this.quoteCurrency = e.detail;
+            this.retrieveData();
+            return;
+        }
         this.quoteCurrency = e.detail;
     }
     //#endregion

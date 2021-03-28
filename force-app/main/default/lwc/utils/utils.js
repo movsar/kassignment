@@ -1,6 +1,16 @@
 import { LightningElement } from 'lwc';
 import Id from '@salesforce/user/Id';
 
+const Utils = {
+    toPlainObject: function(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    },
+    logAsPlainObject: function(obj){
+        console.log('# logAsPlainObject #');
+        console.log(this.toPlainObject(obj));
+    }
+}
+
 const Constants = {
     QUOTE_TO_BASE: 'QUOTE_TO_BASE',
     BASE_TO_QUOTE: 'BASE_TO_QUOTE'
@@ -10,8 +20,6 @@ const LocalSettings = {
     currencyOrderSettingsName: `currencyOrderSettings${Id}`,
 
     incrementCurrencyOrder: function (currencyCode) {
-        console.log('incrementCurrencyOrder');
-
         const currencySettingsStr = localStorage.getItem(this.currencyOrderSettingsName);
         let currencyOrderSettings;
 

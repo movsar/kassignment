@@ -4,14 +4,20 @@
       <div class="slds-grid_vertical">
         <div class="slds-grid">
           <div class="slds-col slds-size_1-of-2">
-            <lightning-input 
-              label="Amount in base currency"
-              data-id="amountInBaseCurrency" 
-              type="number" 
-              placeholder="0.000"
-              value={amountInBaseCurrency} 
-              onchange={handleBaseCurrencyAmountChange}>
-            </lightning-input>
+
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="text-input-id-1">Amount in base currency</label>
+              <div class="slds-form-element__control">
+                <input id="text-input-id-1" 
+                  class="slds-input" 
+                  data-id="amountInBaseCurrency" 
+                  type="number" 
+                  placeholder="0.000"
+                  value={amountInBaseCurrency} 
+                  oninput={handleBaseCurrencyAmountChange}/>
+              </div>
+            </div>
+
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-combobox 
@@ -26,14 +32,20 @@
 
         <div class="slds-grid">
           <div class="slds-col slds-size_1-of-2">
-            <lightning-input 
-              label="Amount in quote currency"
-              data-id="amountInQuoteCurrency" 
-              type="number"
-              placeholder="0.000"
-              value={amountInQuoteCurrency} 
-              onchange={handleQuoteCurrencyAmountChange}>
-            </lightning-input>
+
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="text-input-id-2">Amount in quote currency</label>
+              <div class="slds-form-element__control">
+                <input id="text-input-id-2" 
+                  class="slds-input" 
+                  data-id="amountInQuoteCurrency" 
+                  type="number"
+                  placeholder="0.000"
+                  value={amountInQuoteCurrency} 
+                  oninput={handleQuoteCurrencyAmountChange}/>
+              </div>
+            </div>
+
           </div>
           <div class="slds-col slds-size_1-of-2">
             <lightning-combobox

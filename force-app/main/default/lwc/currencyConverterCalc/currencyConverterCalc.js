@@ -2,6 +2,8 @@ import { LightningElement, api, track } from 'lwc';
 import { LocalSettings } from 'c/utils';
 export default class CurrencyConverterCalc extends LightningElement {
     @api base;
+    @api quote;
+
     @api rates;
 
     initialized = false;
@@ -13,18 +15,12 @@ export default class CurrencyConverterCalc extends LightningElement {
     quoteCurrency;
     amountInQuoteCurrency;
 
-    getRandomQuoteCurrency(){
-        let index = Math.floor(Math.random() * Math.floor(this.ratesPerPage));
-       
-      
-        
-    }
-
     renderedCallback() {
-        if (this.initialized === false && this.rates.length > 0) {
+        if (this.initialized === false && this.quote && this.base && this.rates.length > 0) {
             // Initialize form controls
             this.baseCurrency = this.base;
-            this.quoteCurrency = 'RUB';
+            console.log(this.quote);
+            this.quoteCurrency = this.quote;
             this.amountInBaseCurrency = 1;
             this.initialized = true;
             this.reCalculateFromBaseToQuote();

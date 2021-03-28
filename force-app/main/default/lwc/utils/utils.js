@@ -8,8 +8,8 @@ const Utils = {
         for (let i = 0; i < this.gbpRates.length; i++) {
             let newBaseRate = this.gbpRates.find(rate => rate.code === baseCurrency);
             let gbpRate = this.gbpRates[i];
-            let newRate = Object.assign({}, gbpRate);
-
+            let newRate = {};
+            newRate.code = gbpRate.code;
             newRate.value = gbpRate.value / newBaseRate.value;
             newRate.order = LocalSettings.getCurrencyOrder(newRate.code);
             ratesForNewBaseCurrency.push(newRate);

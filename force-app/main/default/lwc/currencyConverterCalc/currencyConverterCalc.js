@@ -6,7 +6,6 @@ export default class CurrencyConverterCalc extends LightningElement {
     @api rates;
 
     initialized = false;
-    baseCurrencyHasChanged = false;
 
     baseCurrency;
     amountInBaseCurrency;
@@ -25,10 +24,6 @@ export default class CurrencyConverterCalc extends LightningElement {
                 
                 this.reCalculate(this.rates, Constants.BASE_TO_QUOTE);
             }
-        }
-
-        if (this.baseCurrencyHasChanged === true){
-            this.baseCurrencyHasChanged = false;
         }
     }
 
@@ -79,7 +74,6 @@ export default class CurrencyConverterCalc extends LightningElement {
             this.dispatchEvent(new CustomEvent('quotechange', { detail: this.quoteCurrency }));
         }
         
-        this.baseCurrencyHasChanged = true;
         this.baseCurrency = this.baseCurrencyElement.value;
         LocalSettings.incrementCurrencyOrder(this.baseCurrency);
         this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
@@ -88,7 +82,6 @@ export default class CurrencyConverterCalc extends LightningElement {
     handleSelectedQuoteCurrencyChange() {
         if (this.quoteCurrencyElement.value === this.baseCurrency) {
             this.baseCurrency = this.quoteCurrency;
-            this.baseCurrencyHasChanged = true;
             this.dispatchEvent(new CustomEvent('basechange', { detail: this.baseCurrency }));
         }
 

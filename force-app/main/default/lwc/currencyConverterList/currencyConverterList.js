@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 export default class CurrencyConverterList extends LightningElement {
-    @api base;
+    @api baseCurrency;
     @api rates;
     @api currentPageRates;
     @api currentPage;

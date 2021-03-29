@@ -27,30 +27,28 @@ export default class CurrencyConverter extends LightningElement {
     totalPages = 1;
     currentPage = 1;
 
-    initialized = false;
     lastRefreshDateTime;
 
     //#region data
-    updateCachedDate(data) {
+    updateCache(data) {
         Utils.gbpRates = Object.keys(data.rates).map(key => {
             return { 'code': key, 'value': data.rates[key] };
         });
 
         // This is to address issue with API inconsistencies
         if (!Utils.gbpRates.find(rate => rate.code === this.baseCurrency)) {
-            let baseRateObject = { 'code': this.baseCurrency, 'value': 1}
+            let baseRateObject = { 'code': this.baseCurrency, 'value': 1 }
             Utils.gbpRates.push(baseRateObject);
         }
-
-        this.lastRefreshDateTime = Utils.getCurrentDateTime();
-        this.updateView();
     }
 
     retrieveData() {
         fetch(`https://api.exchangeratesapi.io/latest?base=GBP`)
             .then(response => response.json())
             .then(data => {
-                this.updateCachedDate(data);
+                this.updateCache(data);
+                this.updateView();
+                this.lastRefreshDateTime = Utils.getCurrentDateTime();
             })
             .catch(error => console.error(error));
     }
@@ -92,12 +90,6 @@ export default class CurrencyConverter extends LightningElement {
     //#endregion
 
     //#region event handlers
-    renderedCallback() {
-        if (this.initialized === false && this.rates.length > 0) {
-            this.initialized = true;
-        }
-    }
-
     connectedCallback() {
         this.retrieveData();
     }
@@ -127,7 +119,6 @@ export default class CurrencyConverter extends LightningElement {
 
         this.baseCurrency = e.detail;
         this.updateView();
-        this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
     }
 
     quoteCurrencyChangeHandler(e) {
@@ -135,13 +126,10 @@ export default class CurrencyConverter extends LightningElement {
 
         if (this.baseCurrency === e.detail) {
             this.baseCurrency = this.quoteCurrency;
-            this.quoteCurrency = e.detail;
-            this.updateView();
-            return;
         }
 
         this.quoteCurrency = e.detail;
-        this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
+        this.updateView();
     }
     //#endregion
 }

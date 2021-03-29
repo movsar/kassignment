@@ -43,7 +43,6 @@ export default class CurrencyConverter extends LightningElement {
     }
 
     retrieveData() {
-        console.log('retrieveData');
         fetch(`https://api.exchangeratesapi.io/latest?base=GBP`)
             .then(response => response.json())
             .then(data => {
@@ -60,24 +59,23 @@ export default class CurrencyConverter extends LightningElement {
         return this.template.querySelector("c-currency-converter-calc");
     }
 
-    getRandomQuoteCurrency() {
+    getRandomQuoteCurrency(currentPageRates) {
         let index = Utils.getRandomInt(0, this.ratesPerPage);
-
-        while (this.currentPageRates[index].code === this.baseCurrency) {
+        while (currentPageRates[index].code === this.baseCurrency) {
             index = Utils.getRandomInt(0, this.ratesPerPage);
         }
 
-        return this.currentPageRates[index].code;
+        return currentPageRates[index].code;
     }
 
     updateView() {
         const rates = Utils.calculateRates(this.baseCurrency);
 
         this.totalPages = Math.ceil(rates.length / this.ratesPerPage);
-        this.getCurrentPageRates(rates);
+        const currentPageRates = this.getCurrentPageRates(rates);
 
         if (!this.quoteCurrency) {
-            this.quoteCurrency = this.getRandomQuoteCurrency();
+            this.quoteCurrency = this.getRandomQuoteCurrency(currentPageRates);
         }
 
         this.currencyConverterCalcComponent.reCalculate(rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
@@ -88,6 +86,8 @@ export default class CurrencyConverter extends LightningElement {
         const showFrom = (this.currentPage - 1) * this.ratesPerPage;
         const showTo = showFrom + this.ratesPerPage;
         this.currentPageRates = rates.slice(showFrom, showTo);
+
+        return this.currentPageRates;
     }
     //#endregion
 

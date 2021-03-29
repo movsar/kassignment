@@ -71,22 +71,23 @@ export default class CurrencyConverter extends LightningElement {
     }
 
     updateView() {
-        this.rates = Utils.calculateRates(this.baseCurrency);
+        const rates = Utils.calculateRates(this.baseCurrency);
 
-        this.totalPages = Math.ceil(this.rates.length / this.ratesPerPage);
-        this.getCurrentPageRates();
+        this.totalPages = Math.ceil(rates.length / this.ratesPerPage);
+        this.getCurrentPageRates(rates);
 
         if (!this.quoteCurrency) {
             this.quoteCurrency = this.getRandomQuoteCurrency();
         }
 
-        this.currencyConverterCalcComponent.reCalculate(this.rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
+        this.currencyConverterCalcComponent.reCalculate(rates, Constants.BASE_TO_QUOTE, this.quoteCurrency);
+        this.rates = rates;
     }
 
-    getCurrentPageRates() {
+    getCurrentPageRates(rates) {
         const showFrom = (this.currentPage - 1) * this.ratesPerPage;
         const showTo = showFrom + this.ratesPerPage;
-        this.currentPageRates = this.rates.slice(showFrom, showTo);
+        this.currentPageRates = rates.slice(showFrom, showTo);
     }
     //#endregion
 
@@ -100,7 +101,7 @@ export default class CurrencyConverter extends LightningElement {
             this.currentPage = this.totalPages;
         }
 
-        this.getCurrentPageRates();
+        this.getCurrentPageRates(this.rates);
     }
 
     nextPageHandler() {
@@ -108,7 +109,7 @@ export default class CurrencyConverter extends LightningElement {
             this.currentPage = 1;
         }
 
-        this.getCurrentPageRates();
+        this.getCurrentPageRates(this.rates);
     }
 
     baseCurrencyChangeHandler(e) {

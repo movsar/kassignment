@@ -15,13 +15,12 @@ describe('c-currency-converter', () => {
 
     it('retrieve data test', async () => {
         const element = createElement('c-currency-converter', {
-            is: CurrencyConverterCalc
+            is: CurrencyConverter
         });
       
         fetchMock.enableMocks();
         fetch.mockResponseOnce(JSON.stringify({ rates: { CAD: 1.42 } }));        
         document.body.appendChild(element);
-        element.retrieveData();
         // Wait for the renderer
         await flushPromises();
 

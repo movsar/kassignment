@@ -14,10 +14,10 @@ export default class CurrencyConverterCalc extends LightningElement {
 
     @api
     reCalculate(rates, direction, quoteCurrency){
-        console.log(JSON.parse(JSON.stringify(rates)));
         if (quoteCurrency){
             this.quoteCurrency = quoteCurrency;
         }
+        console.log(this.quoteCurrency);
 
         if (!rates || !this.quoteCurrency || !direction){
             console.error('recalculate: Incorrect Input');

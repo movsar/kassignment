@@ -14,6 +14,7 @@ export default class CurrencyConverterCalc extends LightningElement {
 
     @api
     reCalculate(rates, direction, quoteCurrency){
+        console.log(JSON.parse(JSON.stringify(rates)));
         if (quoteCurrency){
             this.quoteCurrency = quoteCurrency;
         }
@@ -41,6 +42,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         if (this.amountInQuoteCurrency === this.amountInQuoteCurrencyElement.value) {
             return;
         }
+
         this.amountInQuoteCurrency = parseFloat(this.amountInQuoteCurrencyElement.value);
         this.reCalculate(this.rates, Constants.QUOTE_TO_BASE);
     }
@@ -49,6 +51,7 @@ export default class CurrencyConverterCalc extends LightningElement {
         if (this.amountInBaseCurrency === this.amountInBaseCurrencyElement.value) {
             return;
         }
+
         this.amountInBaseCurrency = parseFloat(this.amountInBaseCurrencyElement.value);
         this.reCalculate(this.rates, Constants.BASE_TO_QUOTE);
     }

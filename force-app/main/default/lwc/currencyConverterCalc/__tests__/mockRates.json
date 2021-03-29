@@ -1,0 +1,167 @@
+[
+    {
+        "code": "RUB",
+        "value": 104.683461399,
+        "order": 21
+    },
+    {
+        "code": "GBP",
+        "value": 1,
+        "order": 15
+    },
+    {
+        "code": "ISK",
+        "value": 175.1985310457,
+        "order": 11
+    },
+    {
+        "code": "USD",
+        "value": 1.3779633463,
+        "order": 11
+    },
+    {
+        "code": "PHP",
+        "value": 66.8187081155,
+        "order": 7
+    },
+    {
+        "code": "CAD",
+        "value": 1.732570787,
+        "order": 6
+    },
+    {
+        "code": "EUR",
+        "value": 1.1695496064,
+        "order": 6
+    },
+    {
+        "code": "RON",
+        "value": 5.7165245664,
+        "order": 2
+    },
+    {
+        "code": "DKK",
+        "value": 8.6968878285,
+        "order": 1
+    },
+    {
+        "code": "CNY",
+        "value": 9.0129001322,
+        "order": 1
+    },
+    {
+        "code": "NOK",
+        "value": 11.842625405,
+        "order": 1
+    },
+    {
+        "code": "MXN",
+        "value": 28.3703495784,
+        "order": 1
+    },
+    {
+        "code": "HKD",
+        "value": 10.7060570974,
+        "order": 0
+    },
+    {
+        "code": "HUF",
+        "value": 425.2248459118,
+        "order": 0
+    },
+    {
+        "code": "CZK",
+        "value": 30.5030232857,
+        "order": 0
+    },
+    {
+        "code": "SEK",
+        "value": 11.9182952645,
+        "order": 0
+    },
+    {
+        "code": "IDR",
+        "value": 19866.7882998257,
+        "order": 0
+    },
+    {
+        "code": "INR",
+        "value": 99.9783633323,
+        "order": 0
+    },
+    {
+        "code": "BRL",
+        "value": 7.8488474089,
+        "order": 0
+    },
+    {
+        "code": "HRK",
+        "value": 8.8581687192,
+        "order": 0
+    },
+    {
+        "code": "JPY",
+        "value": 151.2695460978,
+        "order": 0
+    },
+    {
+        "code": "THB",
+        "value": 42.8686712747,
+        "order": 0
+    },
+    {
+        "code": "CHF",
+        "value": 1.2970305135,
+        "order": 0
+    },
+    {
+        "code": "MYR",
+        "value": 5.7137176473,
+        "order": 0
+    },
+    {
+        "code": "BGN",
+        "value": 2.2874051203,
+        "order": 0
+    },
+    {
+        "code": "TRY",
+        "value": 11.054933745,
+        "order": 0
+    },
+    {
+        "code": "NZD",
+        "value": 1.9722115014,
+        "order": 0
+    },
+    {
+        "code": "ZAR",
+        "value": 20.6829000152,
+        "order": 0
+    },
+    {
+        "code": "SGD",
+        "value": 1.8554904506,
+        "order": 0
+    },
+    {
+        "code": "AUD",
+        "value": 1.8080067366,
+        "order": 0
+    },
+    {
+        "code": "ILS",
+        "value": 4.5917687099,
+        "order": 0
+    },
+    {
+        "code": "KRW",
+        "value": 1558.0388992199,
+        "order": 0
+    },
+    {
+        "code": "PLN",
+        "value": 5.4375869853,
+        "order": 0
+    }
+]

@@ -3,6 +3,10 @@ import Id from '@salesforce/user/Id';
 const Utils = {
     gbpRates: [],
     calculateRates: function (baseCurrency) {
+        if (!baseCurrency){
+            console.error('calculateRates: base currency is empty');
+            return;
+        }
         let ratesForNewBaseCurrency = [];
         for (let i = 0; i < this.gbpRates.length; i++) {
             let newBaseRateInGbp = this.gbpRates.find(rate => rate.code === baseCurrency);

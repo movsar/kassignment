@@ -1,9 +1,7 @@
 import { createElement } from 'lwc';
 import CurrencyConverterCalc from 'c/currencyConverterCalc';
-import { registerLdsTestWireAdapter } from '@salesforce/sfdx-lwc-jest';
-const mockGetRates = require('./mockRates.json');
-// Register a test wire adapter.
-const flushPromises = () => new Promise(setImmediate);
+const mockRates = require('./mockRates.json');
+
 describe('c-currency-converter-calc', () => {
     afterEach(() => {
         // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -12,24 +10,19 @@ describe('c-currency-converter-calc', () => {
         }
     });
 
-    it('ensures it works', async() => {
+    it('ensures it works', () => {
         const element = createElement('c-currency-converter-calc', {
             is: CurrencyConverterCalc
         });
-        // Add the element to the jsdom instance
-        element.rates = [{
-            "code": "RUB",
-            "value": 104.683461399,
-            "order": 21
-        }];
+        element.rates = mockRates;
+        element.baseCurrency = 'USD';
+        element.quoteCurrency = 'RUB';
         document.body.appendChild(element);
-        await flushPromises();
-        // // Verify displayed greeting
-        // const div = element.shadowRoot.querySelector('div');
-        // expect(div.textContent).toBe('Unit 5 alive!');
 
         // Use a promise to wait for asynchronous changes to the DOM
-        const amountInBaseCurrencyElement = element.shadowRoot.querySelector('[data-id=amountInBaseCurrency]');
-        expect(parseInt(amountInBaseCurrencyElement.value)).toBe(1);
+        return Promise.resolve().then(() => {
+            const amountInBaseCurrencyElement = element.shadowRoot.querySelector('[data-id=amountInBaseCurrency]');
+            expect(parseInt(amountInBaseCurrencyElement.value)).toBe(1);
+        });
     });
 });

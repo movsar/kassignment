@@ -43,6 +43,7 @@ export default class CurrencyConverter extends LightningElement {
     }
 
     retrieveData() {
+        console.log('retrieveData');
         fetch(`https://api.exchangeratesapi.io/latest?base=GBP`)
             .then(response => response.json())
             .then(data => {

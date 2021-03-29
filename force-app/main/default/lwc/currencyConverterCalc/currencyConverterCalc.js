@@ -17,15 +17,12 @@ export default class CurrencyConverterCalc extends LightningElement {
         if (quoteCurrency){
             this.quoteCurrency = quoteCurrency;
         }
-        console.log(this.quoteCurrency);
 
         if (!rates || !this.quoteCurrency || !direction){
             console.error('recalculate: Incorrect Input');
             return;
         }
 
-       // rates = Utils.calculateRates(this.baseCurrency);
-       // Utils.logAsPlainObject(rates);
         const exchangeRate = rates.find(rate => rate.code == this.quoteCurrency).value;
 
         if (direction === Constants.BASE_TO_QUOTE){

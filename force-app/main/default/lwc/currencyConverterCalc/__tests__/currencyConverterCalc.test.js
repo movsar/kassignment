@@ -60,6 +60,7 @@ describe('c-currency-converter-calc', () => {
         amountInQouteCurrencyElement.value = '10';
         amountInQouteCurrencyElement.dispatchEvent(new CustomEvent("input"));
         await flushPromises();
+        
         result = parseFloat(amountInBaseCurrencyElement.value);
         expect(result).toBe(0.096);
     });
